@@ -7,7 +7,7 @@ module.exports = function(grunt) {
                 options: {
                     install: true,
                     copy: false,
-                    targetDir: './libs',
+                    // targetDir: '/libs',
                     cleanTargetDir: true
                 }
             }
@@ -63,7 +63,8 @@ module.exports = function(grunt) {
                 files: ['Gruntfile.js', 'app/*.js', '*.html'],
                 tasks: [  'html2js:dist', 'concat:dist', 'clean:temp'], //'karma:unit','jshint',
                 options: {
-                    atBegin: true
+                    spawn: false,
+                    livereload: true
                 }
             },
             min: {
@@ -115,8 +116,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-newer');
 
-    grunt.registerTask('dev', ['bower', 'connect:server', 'watch:dev']);
+    grunt.registerTask('dev', ['bower', 'connect:server', 'newer:watch:dev']);
     grunt.registerTask('test', ['bower', 'jshint', 'karma:continuous']);
     grunt.registerTask('minified', ['bower', 'connect:server', 'watch:min']);
     grunt.registerTask('package', ['bower', 'jshint', 'karma:unit', 'html2js:dist', 'concat:dist', 'uglify:dist',

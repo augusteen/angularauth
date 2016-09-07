@@ -2,12 +2,17 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2'
+  'ngMaterial', 'ngAnimate','ui.router',
+  'components'
 ]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
+config(['$stateProvider',function($stateProvider) {
 
-  $routeProvider.otherwise({redirectTo: '/view1'});
+	console.log('root app reload true');
+    // $locationProvider.hashPrefix('!');
+
+    // $routeProvider.otherwise({ redirectTo: '/view1' });
+		$stateProvider.state('login',{
+			url:'/login',
+			templateUrl: 'components/login/login.html'
+		});
 }]);

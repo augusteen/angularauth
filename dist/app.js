@@ -2,42 +2,71 @@
 
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2'
+  'ngMaterial', 'ngAnimate','ui.router',
+  'components'
 ]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
-  $locationProvider.hashPrefix('!');
+config(['$stateProvider',function($stateProvider) {
 
-  $routeProvider.otherwise({redirectTo: '/view1'});
+	console.log('root app reload true');
+    // $locationProvider.hashPrefix('!');
+
+    // $routeProvider.otherwise({ redirectTo: '/view1' });
+		$stateProvider.state('login',{
+			url:'/login',
+			templateUrl: 'components/login/login.html'
+		});
 }]);
-;'use strict';
+;angular
+	.module('components',['ui.router'])
+	.config(['$stateProvider',function($stateProvider){
+		// console.log($stateProvider;
 
-angular.module('myApp.view1', ['ngRoute'])
+		// $stateProvider.state('login',{
+		// 	url:'/login',
+		// 	templateUrl: 'login/login.html'
+		// });
+	}]);;var login = {
+    templateUrl: './login.html',
+    controller: 'LoginController'
+}
 
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view1', {
-    templateUrl: 'view1/view1.html',
-    controller: 'View1Ctrl'
-  });
-}])
+angular
+    .module('components')
+    .component('login',login);
+;function LoginController(){
 
-.controller('View1Ctrl', [function() {
+}
 
-}]);;'use strict';
+angular
+	.module('components')
+	.controller('LoginController',LoginController);;angular.module('templates-dist', ['../app/components/login/login.html', '../app/index-async.html', '../app/index.html']);
 
-angular.module('myApp.view2', ['ngRoute'])
-
-.config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/view2', {
-    templateUrl: 'view2/view2.html',
-    controller: 'View2Ctrl'
-  });
-}])
-
-.controller('View2Ctrl', [function() {
-
-}]);;angular.module('templates-dist', ['../app/index-async.html', '../app/index.html', '../app/view1/view1.html', '../app/view2/view2.html']);
+angular.module("../app/components/login/login.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/login/login.html",
+    "<md-content layout=\"vertical\" flex id=\"content\">\n" +
+    "    <div layout=\"row\" layout-align=\"center center\" layout-fill>\n" +
+    "        <md-whiteframe class=\"md-whiteframe-z1\" layout=\"column\" flex=\"30\" layout-padding>\n" +
+    "            <md-content md-theme=\"docs-dark\">\n" +
+    "                <md-input-container>\n" +
+    "                    <label>Email</label>\n" +
+    "                    <input ng-model=\"user.email\">\n" +
+    "                </md-input-container>\n" +
+    "                <md-input-container>\n" +
+    "                    <label>Password</label>\n" +
+    "                    <input ng-model=\"user.password\" type=\"password\">\n" +
+    "                </md-input-container>\n" +
+    "                <md-input-container layout-align=\"center center\">\n" +
+    "                    <div layout=\"row\" layout-sm=\"column\" layout-margin>\n" +
+    "                        <md-button class=\"md-raised\" flex=\"50\" flex-sm=\"100\">Login</md-button>\n" +
+    "                        <md-button class=\"md-raised md-primary\" flex=\"50\" flex-sm=\"100\">Register</md-button>\n" +
+    "                    </div>\n" +
+    "                </md-input-container>\n" +
+    "            </md-content>\n" +
+    "        </md-whiteframe>\n" +
+    "    </div>\n" +
+    "</md-content>\n" +
+    "");
+}]);
 
 angular.module("../app/index-async.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/index-async.html",
@@ -117,20 +146,21 @@ angular.module("../app/index.html", []).run(["$templateCache", function($templat
     "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
     "  <link rel=\"stylesheet\" href=\"../bower_components/html5-boilerplate/dist/css/normalize.css\">\n" +
     "  <link rel=\"stylesheet\" href=\"../bower_components/html5-boilerplate/dist/css/main.css\">\n" +
+    "  <link rel=\"stylesheet\" href=\"../bower_components/angular-material/angular-material.css\">\n" +
     "  <link rel=\"stylesheet\" href=\"app.css\">\n" +
     "  <script src=\"../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js\"></script>\n" +
     "</head>\n" +
     "<body>\n" +
     "  <ul class=\"menu\">\n" +
-    "    <li><a href=\"#!/view1\">view1</a></li>\n" +
-    "    <li><a href=\"#!/view2\">view2</a></li>\n" +
+    "    <li><a href=\"#/home\">view1</a></li>\n" +
+    "    <li><a href=\"#/login\">view2</a></li>\n" +
     "  </ul>\n" +
     "\n" +
     "  <!--[if lt IE 7]>\n" +
     "      <p class=\"browsehappy\">You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/\">upgrade your browser</a> to improve your experience.</p>\n" +
     "  <![endif]-->\n" +
     "\n" +
-    "  <div ng-view></div>\n" +
+    "  <div ui-view></div>\n" +
     "\n" +
     "  <div>Angular seed app: v<span app-version></span></div>\n" +
     "\n" +
@@ -141,6 +171,12 @@ angular.module("../app/index.html", []).run(["$templateCache", function($templat
     "  \n" +
     "  <script src=\"../bower_components/angular/angular.js\"></script>\n" +
     "  <script src=\"../bower_components/angular-route/angular-route.js\"></script>\n" +
+    "  <script src=\"../bower_components/angular-ui-router/release/angular-ui-router.js\"></script>\n" +
+    "  <script src=\"../bower_components/angular-aria/angular-aria.js\"></script>\n" +
+    "  <script src=\"../bower_components/angular-messages/angular-messages.js\"></script>\n" +
+    "  <script src=\"../bower_components/angular-animate/angular-animate.js\"></script>\n" +
+    "  <script src=\"../bower_components/angular-material/angular-material.js\"></script>\n" +
+    " \n" +
     "  <!--\n" +
     "  <script src=\"app.js\"></script>\n" +
     "  <script src=\"view1/view1.js\"></script>\n" +
@@ -152,21 +188,5 @@ angular.module("../app/index.html", []).run(["$templateCache", function($templat
     "  <script type=\"text/javascript\" src=\"../dist/app.js\"></script>\n" +
     "</body>\n" +
     "</html>\n" +
-    "");
-}]);
-
-angular.module("../app/view1/view1.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("../app/view1/view1.html",
-    "<p>This is the partial for view 1.</p>\n" +
-    "");
-}]);
-
-angular.module("../app/view2/view2.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("../app/view2/view2.html",
-    "<p>This is the partial for view 2.</p>\n" +
-    "<p>\n" +
-    "  Showing of 'interpolate' filter:\n" +
-    "  {{ 'Current version is v%VERSION%.' | interpolate }}\n" +
-    "</p>\n" +
     "");
 }]);

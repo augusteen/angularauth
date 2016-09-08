@@ -5,16 +5,28 @@ angular.module('myApp', [
   'ngMaterial', 'ngAnimate','ui.router',
   'components'
 ]).
-config(['$stateProvider',function($stateProvider) {
+config(['$stateProvider','$urlRouterProvider','$mdThemingProvider',function($stateProvider,$urlRouterProvider,$mdThemingProvider) {
+
+
+	$mdThemingProvider.theme('docs-dark')
+    .primaryPalette('blue')
+    .accentPalette('orange');
 
 	console.log('root app reload true');
     // $locationProvider.hashPrefix('!');
 
+    $urlRouterProvider.otherwise('/login');
     // $routeProvider.otherwise({ redirectTo: '/view1' });
-		$stateProvider.state('login',{
-			url:'/login',
-			templateUrl: 'components/login/login.html'
-		});
+	$stateProvider.state('login',{
+		url:'/login',
+		templateUrl: 'components/ux/login.html'
+	})
+	.state('home',{
+		url:'/home',
+		templateUrl: 'components/ux/main.html'	
+	});
+
+		// $state.go('login');
 }]);
 ;angular
 	.module('components',['ui.router'])
@@ -26,23 +38,35 @@ config(['$stateProvider',function($stateProvider) {
 		// 	templateUrl: 'login/login.html'
 		// });
 	}]);;var login = {
-    templateUrl: './login.html',
+	bindings: {
+	 // user: '<',
+  //   button: '@',
+  //   message: '@',
+    onSubmit: '&'
+  },
+    templateUrl: 'components/login/login.html',
     controller: 'LoginController'
 }
 
 angular
     .module('components')
-    .component('login',login);
-;function LoginController(){
+    .component('loginForm',login);
+;function LoginController() {
+    var ctrl = this;
+
+    ctrl.submitForm = function() {
+    	console.log('clicked submit')
+    };
 
 }
 
 angular
-	.module('components')
-	.controller('LoginController',LoginController);;angular.module('templates-dist', ['../app/components/login/login.html', '../app/index-async.html', '../app/index.html']);
+    .module('components')
+    .controller('LoginController', LoginController);
+;angular.module('templates-dist', ['../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/index-async.html', '../app/index.html']);
 
-angular.module("../app/components/login/login.html", []).run(["$templateCache", function($templateCache) {
-  $templateCache.put("../app/components/login/login.html",
+angular.module("../app/components/login.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/login.html",
     "<md-content layout=\"vertical\" flex id=\"content\">\n" +
     "    <div layout=\"row\" layout-align=\"center center\" layout-fill>\n" +
     "        <md-whiteframe class=\"md-whiteframe-z1\" layout=\"column\" flex=\"30\" layout-padding>\n" +
@@ -66,6 +90,70 @@ angular.module("../app/components/login/login.html", []).run(["$templateCache", 
     "    </div>\n" +
     "</md-content>\n" +
     "");
+}]);
+
+angular.module("../app/components/login/login.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/login/login.html",
+    "<div laylayout=\"column\" layout-align=\"center center\">\n" +
+    "<div flex>\n" +
+    "<md-content  flex id=\"content\">\n" +
+    "    <div layout=\"row\" layout-align=\"center center\" layout-fill  style=\"min-height: 500px\">\n" +
+    "        <md-whiteframe class=\"md-whiteframe-z1\" layout=\"column\" flex=\"30\" layout-padding>\n" +
+    "            <form name=\"loginForm\" ng-submit=\"$ctrl.submitForm();\">\n" +
+    "            <md-content md-theme=\"docs-dark\">\n" +
+    "                <md-input-container>\n" +
+    "                    <label>Email</label>\n" +
+    "                    <input ng-model=\"user.email\">\n" +
+    "                </md-input-container>\n" +
+    "                <md-input-container>\n" +
+    "                    <label>Password</label>\n" +
+    "                    <input ng-model=\"user.password\" type=\"password\">\n" +
+    "                </md-input-container>\n" +
+    "                <md-input-container layout-align=\"center center\">\n" +
+    "                    <div layout=\"row\" layout-sm=\"column\" layout-margin>\n" +
+    "                        <md-button class=\"md-raised\" flex=\"50\" flex-sm=\"100\">Login</md-button>\n" +
+    "                        <md-button class=\"md-raised md-primary\" flex=\"50\" flex-sm=\"100\">Register</md-button>\n" +
+    "                    </div>\n" +
+    "                </md-input-container>\n" +
+    "            </md-content>\n" +
+    "            </form>\n" +
+    "        </md-whiteframe>\n" +
+    "    </div>\n" +
+    "</md-content>\n" +
+    "</div>\n" +
+    "<div>\n" +
+    "");
+}]);
+
+angular.module("../app/components/ux/login.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/ux/login.html",
+    "<login-form></login-form>");
+}]);
+
+angular.module("../app/components/ux/main.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/ux/main.html",
+    "<div ui-view> \n" +
+    "	Augusteen\n" +
+    "</div>");
+}]);
+
+angular.module("../app/components/ux/navbar.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/ux/navbar.html",
+    "<div ng-controller=\"AppCtrl\" ng-cloak>\n" +
+    "  <md-content class=\"md-padding\">\n" +
+    "    <md-nav-bar md-selected-nav-item=\"currentNavItem\" nav-bar-aria-label=\"navigation links\">\n" +
+    "      <md-nav-item md-nav-click=\"goto('page1')\" name=\"page1\">Page One</md-nav-item>\n" +
+    "      <md-nav-item md-nav-click=\"goto('page2')\" name=\"page2\">Page Two</md-nav-item>\n" +
+    "      <md-nav-item md-nav-click=\"goto('page3')\" name=\"page3\">Page Three</md-nav-item>\n" +
+    "      <!-- these require actual routing with ui-router or ng-route, so they won't work in the demo\n" +
+    "      <md-nav-item md-nav-sref=\"app.page4\" name=\"page4\">Page Four</md-nav-item>\n" +
+    "      <md-nav-item md-nav-href=\"#page5\" name=\"page5\">Page Five</md-nav-item>\n" +
+    "      -->\n" +
+    "    </md-nav-bar>\n" +
+    "    <div class=\"ext-content\">\n" +
+    "      External content for `<span>{{currentNavItem}}</span>`\n" +
+    "    </div>\n" +
+    "  </md-content>");
 }]);
 
 angular.module("../app/index-async.html", []).run(["$templateCache", function($templateCache) {
@@ -151,18 +239,17 @@ angular.module("../app/index.html", []).run(["$templateCache", function($templat
     "  <script src=\"../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js\"></script>\n" +
     "</head>\n" +
     "<body>\n" +
-    "  <ul class=\"menu\">\n" +
+    "  <!--<ul class=\"menu\">\n" +
     "    <li><a href=\"#/home\">view1</a></li>\n" +
     "    <li><a href=\"#/login\">view2</a></li>\n" +
     "  </ul>\n" +
-    "\n" +
+    "  -->\n" +
+    "  \n" +
     "  <!--[if lt IE 7]>\n" +
     "      <p class=\"browsehappy\">You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/\">upgrade your browser</a> to improve your experience.</p>\n" +
     "  <![endif]-->\n" +
     "\n" +
     "  <div ui-view></div>\n" +
-    "\n" +
-    "  <div>Angular seed app: v<span app-version></span></div>\n" +
     "\n" +
     "  <!-- In production use:\n" +
     "  <script src=\"//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js\"></script>\n" +

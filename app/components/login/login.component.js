@@ -1,8 +1,14 @@
 var login = {
-    templateUrl: './login.html',
+	bindings: {
+	 // user: '<',
+  //   button: '@',
+  //   message: '@',
+    onSubmit: '&'
+  },
+    templateUrl: 'components/login/login.html',
     controller: 'LoginController'
 }
 
 angular
     .module('components')
-    .component('login',login);
+    .component('loginForm',login);

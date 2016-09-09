@@ -37,10 +37,10 @@ config(['$stateProvider','$urlRouterProvider','$mdThemingProvider',function($sta
 		// 	url:'/login',
 		// 	templateUrl: 'login/login.html'
 		// });
-	}]);;var login = {
+	}]);;var loginForm = {
 	bindings: {
-	 // user: '<',
-  //   button: '@',
+	 user: '<',
+   password: '<',
   //   message: '@',
     onSubmit: '&'
   },
@@ -50,19 +50,61 @@ config(['$stateProvider','$urlRouterProvider','$mdThemingProvider',function($sta
 
 angular
     .module('components')
-    .component('loginForm',login);
-;function LoginController() {
+    .component('loginForm',loginForm);
+;function LoginController(LoginService) {
     var ctrl = this;
 
     ctrl.submitForm = function() {
-    	console.log('clicked submit')
+    	console.log('clicked submit');
+
+
+    	console.log(ctrl.user);
+
+      console.log(LoginService.authenticate(ctrl.user));
+    	// LoginService.request();
     };
 
 }
 
 angular
     .module('components')
-    .controller('LoginController', LoginController);
+    .controller('LoginController',['LoginService',LoginController]);
+;function LoginService($http, $q) {
+
+    // this.request = function(){
+    // 	console.log($http);
+    // }
+
+    return ({
+        authenticate: authenticate
+    });
+
+    function authenticate(formdata) {
+
+        var request = $http({
+            method: "post",
+            url: "http://localhost:3000/authenticate",
+            data: {
+                username: formdata.username,
+                password: formdata.password
+            }
+        });
+        return (request.then(handleSuccess, handleError));
+    }
+
+    function handleSuccess(response) {
+        return (response.data);
+    }
+
+    function handleError(response) {
+        console.log(response);
+    }
+}
+
+
+angular
+    .module('components')
+    .service('LoginService', ['$http', '$q', LoginService]);
 ;angular.module('templates-dist', ['../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/index-async.html', '../app/index.html']);
 
 angular.module("../app/components/login.html", []).run(["$templateCache", function($templateCache) {
@@ -98,26 +140,26 @@ angular.module("../app/components/login/login.html", []).run(["$templateCache", 
     "<div flex>\n" +
     "<md-content  flex id=\"content\">\n" +
     "    <div layout=\"row\" layout-align=\"center center\" layout-fill  style=\"min-height: 500px\">\n" +
-    "        <md-whiteframe class=\"md-whiteframe-z1\" layout=\"column\" flex=\"30\" layout-padding>\n" +
-    "            <form name=\"loginForm\" ng-submit=\"$ctrl.submitForm();\">\n" +
+    "        <md-whiteframe class=\"md-whiteframe-z1\"  ng-submit=\"$ctrl.submitForm();\" layout=\"column\" flex=\"30\" layout-padding>\n" +
+    "            <form name=\"loginForm\" >\n" +
     "            <md-content md-theme=\"docs-dark\">\n" +
     "                <md-input-container>\n" +
     "                    <label>Email</label>\n" +
-    "                    <input ng-model=\"user.email\">\n" +
+    "                    <input ng-model=\"$ctrl.user.username\">\n" +
     "                </md-input-container>\n" +
     "                <md-input-container>\n" +
     "                    <label>Password</label>\n" +
-    "                    <input ng-model=\"user.password\" type=\"password\">\n" +
+    "                    <input ng-model=\"$ctrl.user.password\" type=\"password\">\n" +
     "                </md-input-container>\n" +
     "                <md-input-container layout-align=\"center center\">\n" +
     "                    <div layout=\"row\" layout-sm=\"column\" layout-margin>\n" +
-    "                        <md-button class=\"md-raised\" flex=\"50\" flex-sm=\"100\">Login</md-button>\n" +
-    "                        <md-button class=\"md-raised md-primary\" flex=\"50\" flex-sm=\"100\">Register</md-button>\n" +
+    "                        <md-button class=\"md-raised\" flex=\"50\"   type=\"submit\" flex-sm=\"100\">Login</md-button>\n" +
+    "                        <md-button class=\"md-raised md-primary\" type=\"button\" flex=\"50\" flex-sm=\"100\">Register</md-button>\n" +
     "                    </div>\n" +
     "                </md-input-container>\n" +
     "            </md-content>\n" +
     "            </form>\n" +
-    "        </md-whiteframe>\n" +
+    "        </md-whiteframe> \n" +
     "    </div>\n" +
     "</md-content>\n" +
     "</div>\n" +

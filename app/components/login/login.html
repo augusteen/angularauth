@@ -2,26 +2,26 @@
 <div flex>
 <md-content  flex id="content">
     <div layout="row" layout-align="center center" layout-fill  style="min-height: 500px">
-        <md-whiteframe class="md-whiteframe-z1" layout="column" flex="30" layout-padding>
-            <form name="loginForm" ng-submit="$ctrl.submitForm();">
+        <md-whiteframe class="md-whiteframe-z1"  ng-submit="$ctrl.submitForm();" layout="column" flex="30" layout-padding>
+            <form name="loginForm" >
             <md-content md-theme="docs-dark">
                 <md-input-container>
                     <label>Email</label>
-                    <input ng-model="user.email">
+                    <input ng-model="$ctrl.user.username">
                 </md-input-container>
                 <md-input-container>
                     <label>Password</label>
-                    <input ng-model="user.password" type="password">
+                    <input ng-model="$ctrl.user.password" type="password">
                 </md-input-container>
                 <md-input-container layout-align="center center">
                     <div layout="row" layout-sm="column" layout-margin>
-                        <md-button class="md-raised" flex="50" flex-sm="100">Login</md-button>
-                        <md-button class="md-raised md-primary" flex="50" flex-sm="100">Register</md-button>
+                        <md-button class="md-raised" flex="50"   type="submit" flex-sm="100">Login</md-button>
+                        <md-button class="md-raised md-primary" type="button" flex="50" flex-sm="100">Register</md-button>
                     </div>
                 </md-input-container>
             </md-content>
             </form>
-        </md-whiteframe>
+        </md-whiteframe> 
     </div>
 </md-content>
 </div>

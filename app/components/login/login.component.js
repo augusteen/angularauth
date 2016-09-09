@@ -1,7 +1,7 @@
-var login = {
+var loginForm = {
 	bindings: {
-	 // user: '<',
-  //   button: '@',
+	 user: '<',
+   password: '<',
   //   message: '@',
     onSubmit: '&'
   },
@@ -11,4 +11,4 @@ var login = {
 
 angular
     .module('components')
-    .component('loginForm',login);
+    .component('loginForm',loginForm);

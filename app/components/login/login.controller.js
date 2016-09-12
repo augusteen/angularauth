@@ -7,7 +7,7 @@ function LoginController(LoginService) {
 
     	console.log(ctrl.user);
 
-      console.log(LoginService.authenticate(ctrl.user));
+      LoginService.authenticate(ctrl.user);
     	// LoginService.request();
     };
 

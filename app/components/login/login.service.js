@@ -22,12 +22,22 @@ function LoginService($http, $q) {
     }
 
     function handleSuccess(response) {
+
+        localStorage.setItem('token',response.data.token);
+
         return (response.data);
     }
 
   
     function handleError(response) {
         console.log(response);
+    }
+
+    function hasToken(){
+
+        var token = localStorage.getItem('user-token');
+
+        return !token;
     }
 }
 

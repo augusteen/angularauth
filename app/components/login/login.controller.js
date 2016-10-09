@@ -1,4 +1,4 @@
-function LoginController(LoginService) {
+function LoginController($state,LoginService) {
     var ctrl = this;
 
     ctrl.submitForm = function() {
@@ -8,6 +8,9 @@ function LoginController(LoginService) {
     	console.log(ctrl.user);
 
       LoginService.authenticate(ctrl.user);
+
+      $state.go('home');
+      
     	// LoginService.request();
     };
 
@@ -15,4 +18,4 @@ function LoginController(LoginService) {
 
 angular
     .module('components')
-    .controller('LoginController',['LoginService',LoginController]);
+    .controller('LoginController',['$state','LoginService',LoginController]);

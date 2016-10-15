@@ -1,9 +1,9 @@
 'use strict';
-
+angular.module('cookbook', []);
 // Declare app level module which depends on views, and components
 angular.module('myApp', [
     'ngMaterial', 'ngAnimate', 'ui.router',
-    'components'
+    'components','cookbook' 
 ]).
 config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', function($stateProvider, $urlRouterProvider, $mdThemingProvider) {
 
@@ -26,7 +26,13 @@ config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', function($
         .state('home', {
             url: '/home',
             templateUrl: 'components/ux/main.html'
-        });
+            // resolve: function
+        })
+        // .state('clock', { 
+        //     url: '/clock',
+        //     templateUrl: 'components/cookbook/clock.html'
+        //     // resolve: function
+        // });
 
     // $state.go('login');
 }]);

@@ -1,3 +1,39 @@
-<div ui-view> 
-	Augusteen
-</div>
+<div ui-view>
+    <div ng-controller="tabCtrl" layout="column" class="demo">
+        <!--  <script type="text/ng-template" id="partials/view1.html"> Tab #1 </script>
+        <script type="text/ng-template" id="partials/view2.html"> Tab #2 </script>
+        <script type="text/ng-template" id="coolbook/clock.html"> Tab #3 </script> -->
+        <md-toolbar>
+            <h2 class="md-toolbar-tools">
+      <span>Toolbar</span>
+    </h2>
+        </md-toolbar>
+        <md-tabs md-stretch-tabs md-selected="selectedIndex">
+            <md-tab label="tab1">
+                <div ng-controller="MainController">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+                        <g>
+                            <circle style="stroke: #ccc; fill: #fff;" cx="100" cy="100" r="100" />
+                            <line x1="100" y1="100" x2="100" y2="50" style="stroke-width: 5px; stroke: #333;" ng-attr-transform="rotate({{hourRotation}} 100 100)" />
+                            <line x1="100" y1="100" x2="100" y2="20" style="stroke-width: 3px; stroke: #888;" ng-attr-transform="rotate({{minuteRotation}} 100 100)" />
+                            <line x1="100" y1="100" x2="100" y2="5" style="stroke-width: 2px; stroke: #bb0000;" ng-attr-transform="rotate({{secondRotation}} 100 100)" />
+                        </g>
+                    </svg>
+                </div>
+            </md-tab>
+            <md-tab label="tab2">
+            <div ng-controller="dateCtrl">
+                <dateselect model="current"></dateselect><br/>
+                <!-- <dateselect model="current"></dateselect><br/> -->
+                {{current | date:'yyyy-MM-dd'}}
+            </div>
+            <div ng-controller="dynCtrl">
+                <dynamic-select model="personId" resource="People.getList" resource-id="id" resource-label="name" />
+            </div>
+            </md-tab>
+            <md-tab label="tab3">
+                <digital-clock/>
+            </md-tab>
+        </md-tabs>
+        <div id="content" ui-view flex> </div>
+    </div>

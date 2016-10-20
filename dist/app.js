@@ -36,7 +36,46 @@ config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', function($
 
     // $state.go('login');
 }]);
-;angular
+;  function ErrorController(){
+
+  	this.list =[{
+  		message : 'Oh no error occured',
+  		type : 'error'
+  	},{
+  		message : 'Make sure you have filled all the fields',
+  		type : 'warning' 
+  	},{
+  		message : 'This is invalid',
+  		type : 'invalid'
+  	}]
+ 
+}
+
+angular.module('cookbook')
+	.controller('ErrorController', ErrorController);;function ErrorMessage(){
+	return {
+		restrict : 'A',
+		compile: function($element,$attrs){
+
+			$element.addClass('error');
+			console.log(1);
+			return {
+				pre: function($scope,$element,$attrs){
+
+				},
+				post: function($scope,$element,$attrs){
+					$element.addClass('error--' + $attrs.type);
+				}
+			}
+			// return function postLink($scope,$element,$attrs){
+			// 	$element.addClass('error--' + $attrs.type);
+			// }
+		}
+	};
+}
+
+angular.module('cookbook')
+	.directive('errorMessage',ErrorMessage);;angular
 	.module('components',['ui.router'])
 	.config(['$stateProvider',function($stateProvider){
 		// console.log($stateProvider;
@@ -503,17 +542,27 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "                </div>\n" +
     "            </md-tab>\n" +
     "            <md-tab label=\"tab2\">\n" +
-    "            <div ng-controller=\"dateCtrl\">\n" +
+    "<!--             <div ng-controller=\"dateCtrl\">\n" +
     "                <dateselect model=\"current\"></dateselect><br/>\n" +
-    "                <!-- <dateselect model=\"current\"></dateselect><br/> -->\n" +
+    "                <dateselect model=\"current\"></dateselect><br/>\n" +
     "                {{current | date:'yyyy-MM-dd'}}\n" +
     "            </div>\n" +
     "            <div ng-controller=\"dynCtrl\">\n" +
     "                <dynamic-select model=\"personId\" resource=\"People.getList\" resource-id=\"id\" resource-label=\"name\" />\n" +
     "            </div>\n" +
-    "            </md-tab>\n" +
+    " -->            </md-tab>\n" +
     "            <md-tab label=\"tab3\">\n" +
     "                <digital-clock/>\n" +
+    "            </md-tab>\n" +
+    "            <md-tab label=\"tab4\">\n" +
+    "                <style> \n" +
+    "                    .error { border:1px solid blud; padding: 10px 15px; margin: 0 0 10px; border : 1px solid blue;  }\n" +
+    "                    .error--warning { border : 1px solid red; }\n" +
+    "                    .error--invalid { border: 1px solid green }\n" +
+    "                </style>\n" +
+    "                <div ng-controller=\"ErrorController as errors\">\n" +
+    "                    <div ng-repeat=\"error in errors.list\" error-message type=\"{{error.type}}\"> {{ error.message }}</div>\n" +
+    "                </div>\n" +
     "            </md-tab>\n" +
     "        </md-tabs>\n" +
     "        <div id=\"content\" ui-view flex> </div>\n" +

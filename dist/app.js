@@ -165,7 +165,7 @@ angular.module('cookbook')
             // controller: function($scope, $element, $attrs, $transclude) {},
             // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
             restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
-            template: '<select ng-model="date.month" ng-options="month for month in months"> </select> <select ng-model="date.day" ng-options="day for day in days"> </select> <select ng-model="date.year" ng-options="year for year in years"> </select>',
+            template: '<select ng-model="date.month" ng-options="month as month for month in months"> </select> <select ng-model="date.day" ng-options="day for day in days"> </select> <select ng-model="date.year" ng-options="year for year in years"> </select>',
             controller: function($scope) {
                 var i;
 

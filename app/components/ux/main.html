@@ -22,27 +22,43 @@
                 </div>
             </md-tab>
             <md-tab label="tab2">
-<!--             <div ng-controller="dateCtrl">
+                <!--             <div ng-controller="dateCtrl">
                 <dateselect model="current"></dateselect><br/>
                 <dateselect model="current"></dateselect><br/>
-                {{current | date:'yyyy-MM-dd'}}
+                {{current | date:'yyyy-MM-dd'}} 
             </div>
             <div ng-controller="dynCtrl">
                 <dynamic-select model="personId" resource="People.getList" resource-id="id" resource-label="name" />
-            </div>
- -->            </md-tab>
-            <md-tab label="tab3">
-                <digital-clock/>
+            </div> 
+ -->
             </md-tab>
-            <md-tab label="tab4">
-                <style> 
-                    .error { border:1px solid blud; padding: 10px 15px; margin: 0 0 10px; border : 1px solid blue;  }
-                    .error--warning { border : 1px solid red; }
-                    .error--invalid { border: 1px solid green }
+            <md-tab label="Digital Clock">
+                <digital-clock/> 
+            </md-tab>
+            <md-tab label="tab4"> 
+                <style>
+                .error {
+                    border: 1px solid blud;
+                    padding: 10px 15px;
+                    margin: 0 0 10px;
+                    border: 1px solid blue;
+                }
+                 
+                .error--warning {
+                    border: 1px solid red;
+                }
+                .error--invalid {
+                    border: 1px solid green
+                }
                 </style>
                 <div ng-controller="ErrorController as errors">
                     <div ng-repeat="error in errors.list" error-message type="{{error.type}}"> {{ error.message }}</div>
                 </div>
+            </md-tab>
+            <md-tab label="Tic Tac Toe" > 
+                <div ng-controller="tictacCont"> 
+                <tictactoe></tictactoe>
+                </div> 
             </md-tab>
         </md-tabs>
         <div id="content" ui-view flex> </div>

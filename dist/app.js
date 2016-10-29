@@ -1,6 +1,16 @@
 'use strict';
+/**
+ * @module cookbook
+ */
 angular.module('cookbook', []);
 // Declare app level module which depends on views, and components
+
+/**
+ * @module myApp
+ * @requires cookbook
+ * @requires ngMaterial
+ * @requires ngAnimates
+ */
 angular.module('myApp', [
     'ngMaterial', 'ngAnimate', 'ui.router',
     'components','cookbook' 
@@ -84,11 +94,20 @@ angular.module('cookbook')
 		// 	url:'/login',
 		// 	templateUrl: 'login/login.html'
 		// });
-	}]);;/**
-* cookbook Module
-*
-* Description
-*/
+	}]);;
+/**
+ * @class Clock
+ *
+ * @example
+ *
+ * function calculateRotation(){
+			var now = new Date();
+
+			$scope.hourRotation = 360 * now.getHours()/12;
+			$scope.minuteRotation = 360 * now.getMinutes()/60;
+			$scope.secondRotation = 360 * now.getSeconds()/60;
+		}
+ */
 angular.module('cookbook')
 	.controller('MainController',function($scope,$interval) {
 	
@@ -248,7 +267,61 @@ angular.module('cookbook')
 				});
 			}
 		};
-	}]);;var loginForm = {
+	}]);;/**
+ * 
+ * @class TicTacToe
+ */
+
+angular.module('cookbook')
+    .directive('tictactoe', function() {
+        // Runs during compile
+        return {
+            // name: '',
+            // priority: 1,
+            // terminal: true,
+            // scope: {
+            //  board: '='
+            // }, 
+            scope: { board: '=', hello: '=', play: '&' }, // {} = isolate, true = child, false/undefined = no change
+            // controller: function($scope, $element, $attrs, $transclude) {
+            //     $scope.board = [];
+
+            //     for (var i = 9; i >= 0; i--) {
+            //         board[i] = "-";
+            //     }
+
+            //     console.log('controller o');
+            // },
+            // // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+            restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+            // template: '',
+            templateUrl: 'components/cookbook/tictactoe/tictactoe.html',
+            // replace: true,
+            // transclude: true,
+            // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+            link: function($scope, iElm, iAttrs, controller) {
+
+            }
+        };
+    })
+    .controller('tictacCont', ['$scope', function($scope) {
+
+        $scope.board = [];
+        $scope.hello = 'hello austin';
+        $scope.play = play;
+
+        for (var i = 0; i < 9; i++) {
+            $scope.board[i] = "-";
+        }
+
+        // console.log($scope.board);
+
+        function play(num) {
+            console.log(num);
+        }
+
+    }]);
+;var loginForm = {
 	bindings: {
 	 user: '<',
    password: '<',
@@ -434,7 +507,7 @@ angular.module('myApp')
                     break;
             }
         });
-	}]);angular.module('templates-dist', ['../app/components/cookbook/clock.html', '../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/components/ux/ngcontext/ngcontext.html', '../app/index-async.html', '../app/index.html']);
+	}]);angular.module('templates-dist', ['../app/components/cookbook/clock.html', '../app/components/cookbook/tictactoe/tictactoe.html', '../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/components/ux/ngcontext/ngcontext.html', '../app/index-async.html', '../app/index.html']);
 
 angular.module("../app/components/cookbook/clock.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/components/cookbook/clock.html",
@@ -448,6 +521,24 @@ angular.module("../app/components/cookbook/clock.html", []).run(["$templateCache
     "        </g>\n" +
     "    </svg>\n" +
     "</div>\n" +
+    "");
+}]);
+
+angular.module("../app/components/cookbook/tictactoe/tictactoe.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/cookbook/tictactoe/tictactoe.html",
+    "<md-whiteframe class=\"md-whiteframe-1dp\" flex-sm=\"45\" flex-gt-sm=\"35\" flex-gt-md=\"25\" layout layout-align=\"center center\">\n" +
+    "    <md-grid-list md-cols-xs=\"3\" md-cols-sm=\"3\" md-cols-md=\"3\" md-cols-gt-md=\"3\" md-row-height-gt-md=\"1:1\" md-row-height=\"2:2\" md-gutter=\"12px\" md-gutter-gt-sm=\"8px\">\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(0)\" class=\"md-raised\">{{board[0]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(1)\" class=\"md-raised\">{{board[1]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(2)\" class=\"md-raised\">{{board[2]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(3)\" class=\"md-raised\">{{board[3]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(4)\" class=\"md-raised\">{{board[4]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(5)\" class=\"md-raised\">{{board[5]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(6)\" class=\"md-raised\">{{board[6]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(7)\" class=\"md-raised\">{{board[7]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(8)\" class=\"md-raised\">{{board[8]}}</md-button>\n" +
+    "    </md-grid-list>\n" +
+    "</md-whiteframe>\n" +
     "");
 }]);
 
@@ -542,27 +633,46 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "                </div>\n" +
     "            </md-tab>\n" +
     "            <md-tab label=\"tab2\">\n" +
-    "<!--             <div ng-controller=\"dateCtrl\">\n" +
+    "                <!--             <div ng-controller=\"dateCtrl\">\n" +
     "                <dateselect model=\"current\"></dateselect><br/>\n" +
     "                <dateselect model=\"current\"></dateselect><br/>\n" +
-    "                {{current | date:'yyyy-MM-dd'}}\n" +
+    "                {{current | date:'yyyy-MM-dd'}} \n" +
     "            </div>\n" +
     "            <div ng-controller=\"dynCtrl\">\n" +
     "                <dynamic-select model=\"personId\" resource=\"People.getList\" resource-id=\"id\" resource-label=\"name\" />\n" +
-    "            </div>\n" +
-    " -->            </md-tab>\n" +
-    "            <md-tab label=\"tab3\">\n" +
-    "                <digital-clock/>\n" +
+    "            </div> \n" +
+    " -->\n" +
     "            </md-tab>\n" +
-    "            <md-tab label=\"tab4\">\n" +
-    "                <style> \n" +
-    "                    .error { border:1px solid blud; padding: 10px 15px; margin: 0 0 10px; border : 1px solid blue;  }\n" +
-    "                    .error--warning { border : 1px solid red; }\n" +
-    "                    .error--invalid { border: 1px solid green }\n" +
+    "            <md-tab label=\"Digital Clock\">\n" +
+    "                <digital-clock/> \n" +
+    "            </md-tab>\n" +
+    "            <md-tab label=\"tab4\"> \n" +
+    "                <style>\n" +
+    "                .error {\n" +
+    "                    border: 1px solid blud;\n" +
+    "                    padding: 10px 15px;\n" +
+    "                    margin: 0 0 10px;\n" +
+    "                    border: 1px solid blue;\n" +
+    "                }\n" +
+    "                 \n" +
+    "                .error--warning {\n" +
+    "                    border: 1px solid red;\n" +
+    "                }\n" +
+    "                .error--invalid {\n" +
+    "                    border: 1px solid green\n" +
+    "                }\n" +
     "                </style>\n" +
     "                <div ng-controller=\"ErrorController as errors\">\n" +
     "                    <div ng-repeat=\"error in errors.list\" error-message type=\"{{error.type}}\"> {{ error.message }}</div>\n" +
     "                </div>\n" +
+    "            </md-tab>\n" +
+    "            <md-tab label=\"Tic Tac Toe\" > \n" +
+    "                <div ng-controller=\"tictacCont\"> \n" +
+    "                <tictactoe hello=\"hello\" board=\"board\" play=\"play(num)\" >\n" +
+    "                  \n" +
+    "                </tictactoe>\n" +
+    "                    <div ng-bind=\"hello\"></div> \n" +
+    "                </div> \n" +
     "            </md-tab>\n" +
     "        </md-tabs>\n" +
     "        <div id=\"content\" ui-view flex> </div>\n" +

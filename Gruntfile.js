@@ -60,8 +60,8 @@ module.exports = function(grunt) {
         },
         watch: {
             dev: {
-                files: [ 'Gruntfile.js', 'app/**/*.js','app/**/**/*.js', 'app/**/*.html','*.js'],
-                tasks: [  'html2js:dist', 'concat:dist', 'clean:temp'], //'karma:unit','jshint',
+                files: ['Gruntfile.js', 'app/**/*.js', 'app/**/**/*.js', 'app/**/*.html', '*.js'],
+                tasks: ['html2js:dist', 'concat:dist', 'clean:temp'], //'karma:unit','jshint',
                 options: {
                     spawn: false,
                     livereload: true
@@ -102,6 +102,18 @@ module.exports = function(grunt) {
                     dest: 'libs/'
                 }]
             }
+        },
+        jsdoc: {
+            dist: {
+                src: ['app/**/*.js'],
+                options: {
+                    destination: 'doc',
+                    template: "node_modules/docdash",
+                }
+            }
+        },
+        degeni:{
+
         }
 
     });
@@ -117,11 +129,20 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-newer');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
+    grunt.registerTask('dgeni', 'Generate docs via dgeni.', function() {
+        // console.log('inside dgeni');
+        var done = this.async();
+        var dgeni = new Dgeni([require('dgeni-config')]);
+
+        dgeni.generate().then(done);
+    });
     grunt.registerTask('dev', ['bower', 'connect:server', 'newer:watch:dev']);
     grunt.registerTask('test', ['bower', 'jshint', 'karma:continuous']);
     grunt.registerTask('minified', ['bower', 'connect:server', 'watch:min']);
     grunt.registerTask('package', ['bower', 'jshint', 'karma:unit', 'html2js:dist', 'concat:dist', 'uglify:dist',
         'clean:temp', 'compress:dist'
     ]);
+    
 };

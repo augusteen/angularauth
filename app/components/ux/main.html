@@ -57,7 +57,10 @@
             </md-tab>
             <md-tab label="Tic Tac Toe" > 
                 <div ng-controller="tictacCont"> 
-                <tictactoe></tictactoe>
+                <tictactoe hello="hello" board="board" play="play(num)" >
+                  
+                </tictactoe>
+                    <div ng-bind="hello"></div> 
                 </div> 
             </md-tab>
         </md-tabs>

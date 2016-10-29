@@ -1,6 +1,16 @@
 'use strict';
+/**
+ * @module cookbook
+ */
 angular.module('cookbook', []);
 // Declare app level module which depends on views, and components
+
+/**
+ * @module myApp
+ * @requires cookbook
+ * @requires ngMaterial
+ * @requires ngAnimates
+ */
 angular.module('myApp', [
     'ngMaterial', 'ngAnimate', 'ui.router',
     'components','cookbook' 

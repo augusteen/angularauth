@@ -134,8 +134,7 @@ module.exports = function(grunt) {
     grunt.registerTask('dgeni', 'Generate docs via dgeni.', function() {
         // console.log('inside dgeni');
         var done = this.async();
-        
-        var dgeni = new Dgeni([require('./dgeni-config.js')]);
+        var dgeni = new Dgeni([require('dgeni-config')]);
 
         dgeni.generate().then(done);
     });

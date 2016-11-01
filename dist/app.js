@@ -46,23 +46,100 @@ config(['$stateProvider', '$urlRouterProvider', '$mdThemingProvider', function($
 
     // $state.go('login');
 }]);
-;  function ErrorController(){
+;  function ErrorController() {
 
-  	this.list =[{
-  		message : 'Oh no error occured',
-  		type : 'error'
-  	},{
-  		message : 'Make sure you have filled all the fields',
-  		type : 'warning' 
-  	},{
-  		message : 'This is invalid',
-  		type : 'invalid'
-  	}]
- 
-}
+      this.list = [{
+          message: 'Oh no error occured',
+          type: 'error'
+      }, {
+          message: 'Make sure you have filled all the fields',
+          type: 'warning'
+      }, {
+          message: 'This is invalid',
+          type: 'invalid'
+      }]
 
-angular.module('cookbook')
-	.controller('ErrorController', ErrorController);;function ErrorMessage(){
+      this.data = {
+          // A labels array that can contain any sort of values
+          labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+          // Our series array that contains series objects or in this case series data arrays
+          series: [
+              [5, 2, 4, 2, 0]
+          ]
+      };
+
+      // this.chart = new Chartist.Line('.ct-chart', this.data);
+
+      this.chart = new Chartist.Line('.ct-chart', {
+          labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+          series: [
+              [12, 4, 2, 8, 5, 4, 6, 2, 3, 3, 4, 6],
+              [4, 8, 9, 3, 7, 2, 10, 5, 8, 1, 7, 10]
+          ]
+      }, {
+          low: 0,
+          showLine: false,
+          axisX: {
+              showLabel: false,
+              offset: 0
+          },
+          axisY: {
+              showLabel: false,
+              offset: 0
+          }
+      });
+
+      // Let's put a sequence number aside so we can use it in the event callbacks
+      var seq = 0;
+
+      // Once the chart is fully created we reset the sequence
+      this.chart.on('created', function() {
+          seq = 0;
+      });
+
+      // On each drawn element by Chartist we use the Chartist.Svg API to trigger SMIL animations
+      this.chart.on('draw', function(data) {
+          if (data.type === 'point') {
+              // If the drawn element is a line we do a simple opacity fade in. This could also be achieved using CSS3 animations.
+              data.element.animate({
+                  opacity: {
+                      // The delay when we like to start the animation
+                      begin: seq++ * 80,
+                      // Duration of the animation
+                      dur: 500,
+                      // The value where the animation should start
+                      from: 0,
+                      // The value where it should end
+                      to: 1
+                  },
+                  x1: {
+                      begin: seq++ * 80,
+                      dur: 500,
+                      from: data.x - 100,
+                      to: data.x,
+                      // You can specify an easing function name or use easing functions from Chartist.Svg.Easing directly
+                      easing: Chartist.Svg.Easing.easeOutQuart
+                  }
+              });
+          }
+      });
+
+      // For the sake of the example we update the chart every time it's created with a delay of 8 seconds
+      this.chart.on('created', function(data) {
+          // var self = this;
+          if (window.__anim0987432598723) {
+              clearTimeout(window.__anim0987432598723);
+              window.__anim0987432598723 = null;
+          }
+          window.__anim0987432598723 = setTimeout(this.chart.update.bind(this.chart), 8000);
+      }.bind(this));
+
+      //Good Example of passing this to a controller funciton 
+  }
+
+  angular.module('cookbook')
+      .controller('ErrorController', ErrorController);
+;function ErrorMessage(){
 	return {
 		restrict : 'A',
 		compile: function($element,$attrs){
@@ -528,15 +605,15 @@ angular.module("../app/components/cookbook/tictactoe/tictactoe.html", []).run(["
   $templateCache.put("../app/components/cookbook/tictactoe/tictactoe.html",
     "<md-whiteframe class=\"md-whiteframe-1dp\" flex-sm=\"45\" flex-gt-sm=\"35\" flex-gt-md=\"25\" layout layout-align=\"center center\">\n" +
     "    <md-grid-list md-cols-xs=\"3\" md-cols-sm=\"3\" md-cols-md=\"3\" md-cols-gt-md=\"3\" md-row-height-gt-md=\"1:1\" md-row-height=\"2:2\" md-gutter=\"12px\" md-gutter-gt-sm=\"8px\">\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(0)\" class=\"md-raised\">{{board[0]}}</md-button>\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(1)\" class=\"md-raised\">{{board[1]}}</md-button>\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(2)\" class=\"md-raised\">{{board[2]}}</md-button>\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(3)\" class=\"md-raised\">{{board[3]}}</md-button>\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(4)\" class=\"md-raised\">{{board[4]}}</md-button>\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(5)\" class=\"md-raised\">{{board[5]}}</md-button>\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(6)\" class=\"md-raised\">{{board[6]}}</md-button>\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(7)\" class=\"md-raised\">{{board[7]}}</md-button>\n" +
-    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(8)\" class=\"md-raised\">{{board[8]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:0})\" class=\"md-raised\">{{board[0]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:1})\" class=\"md-raised\">{{board[1]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:2})\" class=\"md-raised\">{{board[2]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:3})\" class=\"md-raised\">{{board[3]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:4})\" class=\"md-raised\">{{board[4]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:5})\" class=\"md-raised\">{{board[5]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:6})\" class=\"md-raised\">{{board[6]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:7})\" class=\"md-raised\">{{board[7]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play({num:8})\" class=\"md-raised\">{{board[8]}}</md-button>\n" +
     "    </md-grid-list>\n" +
     "</md-whiteframe>\n" +
     "");
@@ -610,7 +687,7 @@ angular.module("../app/components/ux/login.html", []).run(["$templateCache", fun
 angular.module("../app/components/ux/main.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/components/ux/main.html",
     "<div ui-view>\n" +
-    "    <div ng-controller=\"tabCtrl\" layout=\"column\" class=\"demo\">\n" +
+    "    <div ng-controller=\"tabCtrl\" layout=\"column\" class=\"demo\" height=\"800\">\n" +
     "        <!--  <script type=\"text/ng-template\" id=\"partials/view1.html\"> Tab #1 </script>\n" +
     "        <script type=\"text/ng-template\" id=\"partials/view2.html\"> Tab #2 </script>\n" +
     "        <script type=\"text/ng-template\" id=\"coolbook/clock.html\"> Tab #3 </script> -->\n" +
@@ -619,7 +696,7 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "      <span>Toolbar</span>\n" +
     "    </h2>\n" +
     "        </md-toolbar>\n" +
-    "        <md-tabs md-stretch-tabs md-selected=\"selectedIndex\">\n" +
+    "        <md-tabs md-stretch-tabs md-selected=\"selectedIndex\" >\n" +
     "            <md-tab label=\"tab1\">\n" +
     "                <div ng-controller=\"MainController\">\n" +
     "                    <svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\">\n" +
@@ -664,7 +741,9 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "                </style>\n" +
     "                <div ng-controller=\"ErrorController as errors\">\n" +
     "                    <div ng-repeat=\"error in errors.list\" error-message type=\"{{error.type}}\"> {{ error.message }}</div>\n" +
+    "                    <div class=\"ct-chart ct-perfect-fourth\"></div>\n" +
     "                </div>\n" +
+    "                \n" +
     "            </md-tab>\n" +
     "            <md-tab label=\"Tic Tac Toe\" > \n" +
     "                <div ng-controller=\"tictacCont\"> \n" +
@@ -773,46 +852,46 @@ angular.module("../app/index.html", []).run(["$templateCache", function($templat
     "<!--[if lt IE 7]>      <html lang=\"en\" ng-app=\"myApp\" class=\"no-js lt-ie9 lt-ie8 lt-ie7\"> <![endif]-->\n" +
     "<!--[if IE 7]>         <html lang=\"en\" ng-app=\"myApp\" class=\"no-js lt-ie9 lt-ie8\"> <![endif]-->\n" +
     "<!--[if IE 8]>         <html lang=\"en\" ng-app=\"myApp\" class=\"no-js lt-ie9\"> <![endif]-->\n" +
-    "<!--[if gt IE 8]><!--> <html lang=\"en\" ng-app=\"myApp\" class=\"no-js\"> <!--<![endif]-->\n" +
+    "<!--[if gt IE 8]><!-->\n" +
+    "<html lang=\"en\" ng-app=\"myApp\" class=\"no-js\">\n" +
+    "<!--<![endif]-->\n" +
+    "\n" +
     "<head>\n" +
-    "  <meta charset=\"utf-8\">\n" +
-    "  <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
-    "  <title>My AngularJS App</title>\n" +
-    "  <meta name=\"description\" content=\"\">\n" +
-    "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-    "  <link rel=\"stylesheet\" href=\"../bower_components/html5-boilerplate/dist/css/normalize.css\">\n" +
-    "  <link rel=\"stylesheet\" href=\"../bower_components/html5-boilerplate/dist/css/main.css\">\n" +
-    "  <link rel=\"stylesheet\" href=\"../bower_components/angular-material/angular-material.css\">\n" +
-    "  <link rel=\"stylesheet\" href=\"app.css\">\n" +
-    "  <script src=\"../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js\"></script>\n" +
+    "    <meta charset=\"utf-8\">\n" +
+    "    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n" +
+    "    <title>My AngularJS App</title>\n" +
+    "    <meta name=\"description\" content=\"\">\n" +
+    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
+    "    <link rel=\"stylesheet\" href=\"../bower_components/html5-boilerplate/dist/css/normalize.css\">\n" +
+    "    <link rel=\"stylesheet\" href=\"../bower_components/html5-boilerplate/dist/css/main.css\">\n" +
+    "    <link rel=\"stylesheet\" href=\"../bower_components/angular-material/angular-material.css\">\n" +
+    "    <link rel=\"stylesheet\" href=\"app.css\">\n" +
+    "    <link rel=\"stylesheet\" href=\"../bower_components/chartist/dist/chartist.min.css\">\n" +
+    "    <script src=\"../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js\"></script>\n" +
+    "    <script src=\"../bower_components/chartist/dist/chartist.min.js\" ></script>\n" +
     "</head>\n" +
+    "\n" +
     "<body>\n" +
-    "  <!--<ul class=\"menu\">\n" +
+    "    <!--<ul class=\"menu\">\n" +
     "    <li><a href=\"#/home\">view1</a></li>\n" +
     "    <li><a href=\"#/login\">view2</a></li>\n" +
     "  </ul>\n" +
     "  -->\n" +
-    "  \n" +
-    "  <!--[if lt IE 7]>\n" +
+    "    <!--[if lt IE 7]>\n" +
     "      <p class=\"browsehappy\">You are using an <strong>outdated</strong> browser. Please <a href=\"http://browsehappy.com/\">upgrade your browser</a> to improve your experience.</p>\n" +
     "  <![endif]-->\n" +
-    "\n" +
-    "  <div ui-view></div>\n" +
-    "\n" +
-    "  <!-- In production use:\n" +
+    "    <div ui-view></div>\n" +
+    "    <!-- In production use:\n" +
     "  <script src=\"//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js\"></script>\n" +
     "  -->\n" +
-    "\n" +
-    "  \n" +
-    "  <script src=\"../bower_components/angular/angular.js\"></script>\n" +
-    "  <script src=\"../bower_components/angular-route/angular-route.js\"></script>\n" +
-    "  <script src=\"../bower_components/angular-ui-router/release/angular-ui-router.js\"></script>\n" +
-    "  <script src=\"../bower_components/angular-aria/angular-aria.js\"></script>\n" +
-    "  <script src=\"../bower_components/angular-messages/angular-messages.js\"></script>\n" +
-    "  <script src=\"../bower_components/angular-animate/angular-animate.js\"></script>\n" +
-    "  <script src=\"../bower_components/angular-material/angular-material.js\"></script>\n" +
-    " \n" +
-    "  <!--\n" +
+    "    <script src=\"../bower_components/angular/angular.js\"></script>\n" +
+    "    <script src=\"../bower_components/angular-route/angular-route.js\"></script>\n" +
+    "    <script src=\"../bower_components/angular-ui-router/release/angular-ui-router.js\"></script>\n" +
+    "    <script src=\"../bower_components/angular-aria/angular-aria.js\"></script>\n" +
+    "    <script src=\"../bower_components/angular-messages/angular-messages.js\"></script>\n" +
+    "    <script src=\"../bower_components/angular-animate/angular-animate.js\"></script>\n" +
+    "    <script src=\"../bower_components/angular-material/angular-material.js\"></script>\n" +
+    "    <!--\n" +
     "  <script src=\"app.js\"></script>\n" +
     "  <script src=\"view1/view1.js\"></script>\n" +
     "  <script src=\"view2/view2.js\"></script>\n" +
@@ -820,8 +899,9 @@ angular.module("../app/index.html", []).run(["$templateCache", function($templat
     "  <script src=\"components/version/version-directive.js\"></script>\n" +
     "  <script src=\"components/version/interpolate-filter.js\"></script>\n" +
     "  -->\n" +
-    "  <script type=\"text/javascript\" src=\"../dist/app.js\"></script>\n" +
+    "    <script type=\"text/javascript\" src=\"../dist/app.js\"></script>\n" +
     "</body>\n" +
+    "\n" +
     "</html>\n" +
     "");
 }]);

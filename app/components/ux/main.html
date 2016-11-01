@@ -1,5 +1,5 @@
 <div ui-view>
-    <div ng-controller="tabCtrl" layout="column" class="demo">
+    <div ng-controller="tabCtrl" layout="column" class="demo" height="800">
         <!--  <script type="text/ng-template" id="partials/view1.html"> Tab #1 </script>
         <script type="text/ng-template" id="partials/view2.html"> Tab #2 </script>
         <script type="text/ng-template" id="coolbook/clock.html"> Tab #3 </script> -->
@@ -8,7 +8,7 @@
       <span>Toolbar</span>
     </h2>
         </md-toolbar>
-        <md-tabs md-stretch-tabs md-selected="selectedIndex">
+        <md-tabs md-stretch-tabs md-selected="selectedIndex" >
             <md-tab label="tab1">
                 <div ng-controller="MainController">
                     <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
@@ -53,7 +53,9 @@
                 </style>
                 <div ng-controller="ErrorController as errors">
                     <div ng-repeat="error in errors.list" error-message type="{{error.type}}"> {{ error.message }}</div>
+                    <div class="ct-chart ct-perfect-fourth"></div>
                 </div>
+                
             </md-tab>
             <md-tab label="Tic Tac Toe" > 
                 <div ng-controller="tictacCont"> 

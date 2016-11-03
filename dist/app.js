@@ -268,11 +268,40 @@ angular.module('cookbook')
 			}
 		};
 	}]);;/**
+<<<<<<< HEAD
+* cookbook Module
+*
+* Description
+*/
+angular.module('cookbook')
+.directive('agFilter', function(){
+	// Runs during compile
+	return {
+		// name: '',
+		// priority: 1,
+		// terminal: true,
+		// scope: {}, // {} = isolate, true = child, false/undefined = no change
+		// controller: function($scope, $element, $attrs, $transclude) {},
+		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+		// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+		// template: '',
+		templateUrl: 'components/cookbook/tablefilter.html',
+		// replace: true, 
+		// transclude: true,
+		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+		link: function($scope, iElm, iAttrs, controller) {
+			
+		}
+	};
+});
+;angular.module('cookbook')
+=======
  * 
  * @class TicTacToe
  */
 
 angular.module('cookbook')
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
     .directive('tictactoe', function() {
         // Runs during compile
         return {
@@ -280,9 +309,15 @@ angular.module('cookbook')
             // priority: 1,
             // terminal: true,
             // scope: {
+<<<<<<< HEAD
+            // 	board: '='
+            // }, 
+            scope:true,// {} = isolate, true = child, false/undefined = no change
+=======
             //  board: '='
             // }, 
             scope: { board: '=', hello: '=', play: '&' }, // {} = isolate, true = child, false/undefined = no change
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
             // controller: function($scope, $element, $attrs, $transclude) {
             //     $scope.board = [];
 
@@ -294,8 +329,13 @@ angular.module('cookbook')
             // },
             // // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
             restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+<<<<<<< HEAD
+            template: '<div> Board <div ng-repeat="obj in board track by $index" >{{obj}}</div>  </div>',
+            // templateUrl: '',
+=======
             // template: '',
             templateUrl: 'components/cookbook/tictactoe/tictactoe.html',
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
             // replace: true,
             // transclude: true,
             // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
@@ -307,6 +347,52 @@ angular.module('cookbook')
     .controller('tictacCont', ['$scope', function($scope) {
 
         $scope.board = [];
+<<<<<<< HEAD
+
+        for (var i = 9; i >= 0; i--) {
+            $scope.board[i] = "-";
+        }
+
+        console.log($scope.board);
+    }]);
+
+/*
+
+app.service('userService', ['$log', 'synthesize', 'defaults',
+    function($log, synthesize, defaults)
+    {
+        var _private = synthesize(this, {
+            user_name: defaults.user.user_name,
+            user_img_src: defaults.user.user_img_src
+        });
+       // automatically synthesized getter
+       $log.log('in userService:', this.getUserName());
+   }
+]);
+
+app.factory('synthesize', [
+    function()
+    {
+        return function(self, props)
+        {
+            var priv = {};
+            angular.forEach(props, _synth);
+            return priv;
+            function _synth(value, name)
+            {
+                priv[name] = value;
+                _makeGetterSetter(value, name);
+            }
+            function _makeGetterSetter(value, name)
+            {
+                self[_makeCamelCase(name)] = function() { return priv[name] };
+            }
+        };
+    }
+]);
+
+ */
+=======
         $scope.hello = 'hello austin';
         $scope.play = play;
 
@@ -321,6 +407,7 @@ angular.module('cookbook')
         }
 
     }]);
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
 ;var loginForm = {
 	bindings: {
 	 user: '<',
@@ -507,7 +594,11 @@ angular.module('myApp')
                     break;
             }
         });
+<<<<<<< HEAD
+	}]);angular.module('templates-dist', ['../app/components/cookbook/clock.html', '../app/components/cookbook/tablefilter.html', '../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/components/ux/ngcontext/ngcontext.html', '../app/index-async.html', '../app/index.html']);
+=======
 	}]);angular.module('templates-dist', ['../app/components/cookbook/clock.html', '../app/components/cookbook/tictactoe/tictactoe.html', '../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/components/ux/ngcontext/ngcontext.html', '../app/index-async.html', '../app/index.html']);
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
 
 angular.module("../app/components/cookbook/clock.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/components/cookbook/clock.html",
@@ -524,6 +615,37 @@ angular.module("../app/components/cookbook/clock.html", []).run(["$templateCache
     "");
 }]);
 
+<<<<<<< HEAD
+angular.module("../app/components/cookbook/tablefilter.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/cookbook/tablefilter.html",
+    "<div class=\"panel panel-default\">\n" +
+    "    <div class=\"panel-heading\">\n" +
+    "        <h2 class=\"panel-title\">Project List</h2>\n" +
+    "        <small>Keep track of project </small>\n" +
+    "    </div>\n" +
+    "    <div class=\"panel-body\">\n" +
+    "        <ul class=\"list-group\">\n" +
+    "            <li class=\"list-group-item\">\n" +
+    "                <div class=\"row\" >\n" +
+    "                    <div class=\"col-xs-6\">\n" +
+    "                        <a href=\"#\">\n" +
+    "                            <div></div>\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"col-xs-6\">\n" +
+    "                        <div class=\"progress\">\n" +
+    "                            <div class=\"progress-bar progress-bar-success\" role=\"progressbar\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 40%\">\n" +
+    "                                <span class=\"sr-only\">40% Complete (success)</span>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
+    "    <div class=\"panel-footer\">Panel footer</div>\n" +
+    "</div>\n" +
+=======
 angular.module("../app/components/cookbook/tictactoe/tictactoe.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/components/cookbook/tictactoe/tictactoe.html",
     "<md-whiteframe class=\"md-whiteframe-1dp\" flex-sm=\"45\" flex-gt-sm=\"35\" flex-gt-md=\"25\" layout layout-align=\"center center\">\n" +
@@ -539,6 +661,7 @@ angular.module("../app/components/cookbook/tictactoe/tictactoe.html", []).run(["
     "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(8)\" class=\"md-raised\">{{board[8]}}</md-button>\n" +
     "    </md-grid-list>\n" +
     "</md-whiteframe>\n" +
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
     "");
 }]);
 
@@ -668,12 +791,21 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "            </md-tab>\n" +
     "            <md-tab label=\"Tic Tac Toe\" > \n" +
     "                <div ng-controller=\"tictacCont\"> \n" +
+<<<<<<< HEAD
+    "                <tictactoe></tictactoe>\n" +
+    "                </div> \n" +
+    "            </md-tab>\n" +
+    "            <md-tab label=\"Augusteeen\">\n" +
+    "                <ag-filter></ag-filter>\n" +
+    "            </md-tab>\n" +
+=======
     "                <tictactoe hello=\"hello\" board=\"board\" play=\"play(num)\" >\n" +
     "                  \n" +
     "                </tictactoe>\n" +
     "                    <div ng-bind=\"hello\"></div> \n" +
     "                </div> \n" +
     "            </md-tab>\n" +
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
     "        </md-tabs>\n" +
     "        <div id=\"content\" ui-view flex> </div>\n" +
     "    </div>\n" +
@@ -785,6 +917,17 @@ angular.module("../app/index.html", []).run(["$templateCache", function($templat
     "  <link rel=\"stylesheet\" href=\"../bower_components/angular-material/angular-material.css\">\n" +
     "  <link rel=\"stylesheet\" href=\"app.css\">\n" +
     "  <script src=\"../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js\"></script>\n" +
+    "\n" +
+    "  <!-- Latest compiled and minified CSS -->\n" +
+    "<link rel=\"stylesheet\" href=\"../bower_components/bootstrap/dist/css/bootstrap.min.css\" >\n" +
+    "\n" +
+    "<!-- Optional theme -->\n" +
+    "<link rel=\"stylesheet\" href=\"../bower_components/bootstrap/dist/css/bootstrap-theme.min.css\" >\n" +
+    "<script src=\"../bower_components/jquery/dist/jquery.min.js\"></script>\n" +
+    "<!-- Latest compiled and minified JavaScript -->\n" +
+    "<script src=\"../bower_components/bootstrap/dist/js/bootstrap.min.js\"></script>\n" +
+    "\n" +
+    "\n" +
     "</head>\n" +
     "<body>\n" +
     "  <!--<ul class=\"menu\">\n" +

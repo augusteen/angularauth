@@ -1,8 +1,17 @@
+
 /**
-* cookbook Module
-*
-* Description
-*/
+ * @class Clock
+ *
+ * @example
+ *
+ * function calculateRotation(){
+			var now = new Date();
+
+			$scope.hourRotation = 360 * now.getHours()/12;
+			$scope.minuteRotation = 360 * now.getMinutes()/60;
+			$scope.secondRotation = 360 * now.getSeconds()/60;
+		}
+ */
 angular.module('cookbook')
 	.controller('MainController',function($scope,$interval) {
 	

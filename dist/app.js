@@ -1,6 +1,16 @@
 'use strict';
+/**
+ * @module cookbook
+ */
 angular.module('cookbook', []);
 // Declare app level module which depends on views, and components
+
+/**
+ * @module myApp
+ * @requires cookbook
+ * @requires ngMaterial
+ * @requires ngAnimates
+ */
 angular.module('myApp', [
     'ngMaterial', 'ngAnimate', 'ui.router',
     'components','cookbook' 
@@ -84,11 +94,20 @@ angular.module('cookbook')
 		// 	url:'/login',
 		// 	templateUrl: 'login/login.html'
 		// });
-	}]);;/**
-* cookbook Module
-*
-* Description
-*/
+	}]);;
+/**
+ * @class Clock
+ *
+ * @example
+ *
+ * function calculateRotation(){
+			var now = new Date();
+
+			$scope.hourRotation = 360 * now.getHours()/12;
+			$scope.minuteRotation = 360 * now.getMinutes()/60;
+			$scope.secondRotation = 360 * now.getSeconds()/60;
+		}
+ */
 angular.module('cookbook')
 	.controller('MainController',function($scope,$interval) {
 	
@@ -249,6 +268,7 @@ angular.module('cookbook')
 			}
 		};
 	}]);;/**
+<<<<<<< HEAD
 * cookbook Module
 *
 * Description
@@ -275,6 +295,13 @@ angular.module('cookbook')
 	};
 });
 ;angular.module('cookbook')
+=======
+ * 
+ * @class TicTacToe
+ */
+
+angular.module('cookbook')
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
     .directive('tictactoe', function() {
         // Runs during compile
         return {
@@ -282,9 +309,15 @@ angular.module('cookbook')
             // priority: 1,
             // terminal: true,
             // scope: {
+<<<<<<< HEAD
             // 	board: '='
             // }, 
             scope:true,// {} = isolate, true = child, false/undefined = no change
+=======
+            //  board: '='
+            // }, 
+            scope: { board: '=', hello: '=', play: '&' }, // {} = isolate, true = child, false/undefined = no change
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
             // controller: function($scope, $element, $attrs, $transclude) {
             //     $scope.board = [];
 
@@ -296,8 +329,13 @@ angular.module('cookbook')
             // },
             // // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
             restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+<<<<<<< HEAD
             template: '<div> Board <div ng-repeat="obj in board track by $index" >{{obj}}</div>  </div>',
             // templateUrl: '',
+=======
+            // template: '',
+            templateUrl: 'components/cookbook/tictactoe/tictactoe.html',
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
             // replace: true,
             // transclude: true,
             // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
@@ -309,6 +347,7 @@ angular.module('cookbook')
     .controller('tictacCont', ['$scope', function($scope) {
 
         $scope.board = [];
+<<<<<<< HEAD
 
         for (var i = 9; i >= 0; i--) {
             $scope.board[i] = "-";
@@ -353,6 +392,22 @@ app.factory('synthesize', [
 ]);
 
  */
+=======
+        $scope.hello = 'hello austin';
+        $scope.play = play;
+
+        for (var i = 0; i < 9; i++) {
+            $scope.board[i] = "-";
+        }
+
+        // console.log($scope.board);
+
+        function play(num) {
+            console.log(num);
+        }
+
+    }]);
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
 ;var loginForm = {
 	bindings: {
 	 user: '<',
@@ -539,7 +594,11 @@ angular.module('myApp')
                     break;
             }
         });
+<<<<<<< HEAD
 	}]);angular.module('templates-dist', ['../app/components/cookbook/clock.html', '../app/components/cookbook/tablefilter.html', '../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/components/ux/ngcontext/ngcontext.html', '../app/index-async.html', '../app/index.html']);
+=======
+	}]);angular.module('templates-dist', ['../app/components/cookbook/clock.html', '../app/components/cookbook/tictactoe/tictactoe.html', '../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/components/ux/ngcontext/ngcontext.html', '../app/index-async.html', '../app/index.html']);
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
 
 angular.module("../app/components/cookbook/clock.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/components/cookbook/clock.html",
@@ -556,6 +615,7 @@ angular.module("../app/components/cookbook/clock.html", []).run(["$templateCache
     "");
 }]);
 
+<<<<<<< HEAD
 angular.module("../app/components/cookbook/tablefilter.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/components/cookbook/tablefilter.html",
     "<div class=\"panel panel-default\">\n" +
@@ -585,6 +645,23 @@ angular.module("../app/components/cookbook/tablefilter.html", []).run(["$templat
     "    </div>\n" +
     "    <div class=\"panel-footer\">Panel footer</div>\n" +
     "</div>\n" +
+=======
+angular.module("../app/components/cookbook/tictactoe/tictactoe.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/cookbook/tictactoe/tictactoe.html",
+    "<md-whiteframe class=\"md-whiteframe-1dp\" flex-sm=\"45\" flex-gt-sm=\"35\" flex-gt-md=\"25\" layout layout-align=\"center center\">\n" +
+    "    <md-grid-list md-cols-xs=\"3\" md-cols-sm=\"3\" md-cols-md=\"3\" md-cols-gt-md=\"3\" md-row-height-gt-md=\"1:1\" md-row-height=\"2:2\" md-gutter=\"12px\" md-gutter-gt-sm=\"8px\">\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(0)\" class=\"md-raised\">{{board[0]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(1)\" class=\"md-raised\">{{board[1]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(2)\" class=\"md-raised\">{{board[2]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(3)\" class=\"md-raised\">{{board[3]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(4)\" class=\"md-raised\">{{board[4]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(5)\" class=\"md-raised\">{{board[5]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(6)\" class=\"md-raised\">{{board[6]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(7)\" class=\"md-raised\">{{board[7]}}</md-button>\n" +
+    "        <md-button md-colspan=\"1\" md-rowspan=\"1\" ng-click=\"play(8)\" class=\"md-raised\">{{board[8]}}</md-button>\n" +
+    "    </md-grid-list>\n" +
+    "</md-whiteframe>\n" +
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
     "");
 }]);
 
@@ -714,12 +791,21 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "            </md-tab>\n" +
     "            <md-tab label=\"Tic Tac Toe\" > \n" +
     "                <div ng-controller=\"tictacCont\"> \n" +
+<<<<<<< HEAD
     "                <tictactoe></tictactoe>\n" +
     "                </div> \n" +
     "            </md-tab>\n" +
     "            <md-tab label=\"Augusteeen\">\n" +
     "                <ag-filter></ag-filter>\n" +
     "            </md-tab>\n" +
+=======
+    "                <tictactoe hello=\"hello\" board=\"board\" play=\"play(num)\" >\n" +
+    "                  \n" +
+    "                </tictactoe>\n" +
+    "                    <div ng-bind=\"hello\"></div> \n" +
+    "                </div> \n" +
+    "            </md-tab>\n" +
+>>>>>>> daacdfcaf7caf7d19183f574b3979dc0414652e8
     "        </md-tabs>\n" +
     "        <div id=\"content\" ui-view flex> </div>\n" +
     "    </div>\n" +

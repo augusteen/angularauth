@@ -1,0 +1,7 @@
+{
+	response : {
+		data : {
+			token : 'augusteen'
+		}
+	}	
+}

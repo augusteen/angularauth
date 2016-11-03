@@ -40,3 +40,40 @@ angular.module('cookbook')
 
         console.log($scope.board);
     }]);
+
+/*
+
+app.service('userService', ['$log', 'synthesize', 'defaults',
+    function($log, synthesize, defaults)
+    {
+        var _private = synthesize(this, {
+            user_name: defaults.user.user_name,
+            user_img_src: defaults.user.user_img_src
+        });
+       // automatically synthesized getter
+       $log.log('in userService:', this.getUserName());
+   }
+]);
+
+app.factory('synthesize', [
+    function()
+    {
+        return function(self, props)
+        {
+            var priv = {};
+            angular.forEach(props, _synth);
+            return priv;
+            function _synth(value, name)
+            {
+                priv[name] = value;
+                _makeGetterSetter(value, name);
+            }
+            function _makeGetterSetter(value, name)
+            {
+                self[_makeCamelCase(name)] = function() { return priv[name] };
+            }
+        };
+    }
+]);
+
+ */

@@ -248,7 +248,112 @@ angular.module('cookbook')
 				});
 			}
 		};
-	}]);;var loginForm = {
+	}]);;/**
+* cookbook Module
+*
+* Description
+*/
+angular.module('cookbook')
+.directive('agFilter', function(){
+	// Runs during compile
+	return {
+		// name: '',
+		// priority: 1,
+		// terminal: true,
+		// scope: {}, // {} = isolate, true = child, false/undefined = no change
+		// controller: function($scope, $element, $attrs, $transclude) {},
+		// require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+		// restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+		// template: '',
+		templateUrl: 'components/cookbook/tablefilter.html',
+		// replace: true, 
+		// transclude: true,
+		// compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+		link: function($scope, iElm, iAttrs, controller) {
+			
+		}
+	};
+});
+;angular.module('cookbook')
+    .directive('tictactoe', function() {
+        // Runs during compile
+        return {
+            // name: '',
+            // priority: 1,
+            // terminal: true,
+            // scope: {
+            // 	board: '='
+            // }, 
+            scope:true,// {} = isolate, true = child, false/undefined = no change
+            // controller: function($scope, $element, $attrs, $transclude) {
+            //     $scope.board = [];
+
+            //     for (var i = 9; i >= 0; i--) {
+            //         board[i] = "-";
+            //     }
+
+            //     console.log('controller o');
+            // },
+            // // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+            restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
+            template: '<div> Board <div ng-repeat="obj in board track by $index" >{{obj}}</div>  </div>',
+            // templateUrl: '',
+            // replace: true,
+            // transclude: true,
+            // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+            link: function($scope, iElm, iAttrs, controller) {
+
+            }
+        };
+    })
+    .controller('tictacCont', ['$scope', function($scope) {
+
+        $scope.board = [];
+
+        for (var i = 9; i >= 0; i--) {
+            $scope.board[i] = "-";
+        }
+
+        console.log($scope.board);
+    }]);
+
+/*
+
+app.service('userService', ['$log', 'synthesize', 'defaults',
+    function($log, synthesize, defaults)
+    {
+        var _private = synthesize(this, {
+            user_name: defaults.user.user_name,
+            user_img_src: defaults.user.user_img_src
+        });
+       // automatically synthesized getter
+       $log.log('in userService:', this.getUserName());
+   }
+]);
+
+app.factory('synthesize', [
+    function()
+    {
+        return function(self, props)
+        {
+            var priv = {};
+            angular.forEach(props, _synth);
+            return priv;
+            function _synth(value, name)
+            {
+                priv[name] = value;
+                _makeGetterSetter(value, name);
+            }
+            function _makeGetterSetter(value, name)
+            {
+                self[_makeCamelCase(name)] = function() { return priv[name] };
+            }
+        };
+    }
+]);
+
+ */
+;var loginForm = {
 	bindings: {
 	 user: '<',
    password: '<',
@@ -434,7 +539,7 @@ angular.module('myApp')
                     break;
             }
         });
-	}]);angular.module('templates-dist', ['../app/components/cookbook/clock.html', '../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/components/ux/ngcontext/ngcontext.html', '../app/index-async.html', '../app/index.html']);
+	}]);angular.module('templates-dist', ['../app/components/cookbook/clock.html', '../app/components/cookbook/tablefilter.html', '../app/components/login.html', '../app/components/login/login.html', '../app/components/ux/login.html', '../app/components/ux/main.html', '../app/components/ux/navbar.html', '../app/components/ux/ngcontext/ngcontext.html', '../app/index-async.html', '../app/index.html']);
 
 angular.module("../app/components/cookbook/clock.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/components/cookbook/clock.html",
@@ -447,6 +552,38 @@ angular.module("../app/components/cookbook/clock.html", []).run(["$templateCache
     "            <line x1=\"100\" y1=\"100\" x2=\"100\" y2=\"5\" style=\"stroke-width: 2px; stroke: #bb0000;\" ng-attr-transform=\"rotate({{secondRotation}} 100 100)\" />\n" +
     "        </g>\n" +
     "    </svg>\n" +
+    "</div>\n" +
+    "");
+}]);
+
+angular.module("../app/components/cookbook/tablefilter.html", []).run(["$templateCache", function($templateCache) {
+  $templateCache.put("../app/components/cookbook/tablefilter.html",
+    "<div class=\"panel panel-default\">\n" +
+    "    <div class=\"panel-heading\">\n" +
+    "        <h2 class=\"panel-title\">Project List</h2>\n" +
+    "        <small>Keep track of project </small>\n" +
+    "    </div>\n" +
+    "    <div class=\"panel-body\">\n" +
+    "        <ul class=\"list-group\">\n" +
+    "            <li class=\"list-group-item\">\n" +
+    "                <div class=\"row\" >\n" +
+    "                    <div class=\"col-xs-6\">\n" +
+    "                        <a href=\"#\">\n" +
+    "                            <div></div>\n" +
+    "                        </a>\n" +
+    "                    </div>\n" +
+    "                    <div class=\"col-xs-6\">\n" +
+    "                        <div class=\"progress\">\n" +
+    "                            <div class=\"progress-bar progress-bar-success\" role=\"progressbar\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 40%\">\n" +
+    "                                <span class=\"sr-only\">40% Complete (success)</span>\n" +
+    "                            </div>\n" +
+    "                        </div>\n" +
+    "                    </div>\n" +
+    "                </div>\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
+    "    <div class=\"panel-footer\">Panel footer</div>\n" +
     "</div>\n" +
     "");
 }]);
@@ -542,27 +679,46 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "                </div>\n" +
     "            </md-tab>\n" +
     "            <md-tab label=\"tab2\">\n" +
-    "<!--             <div ng-controller=\"dateCtrl\">\n" +
+    "                <!--             <div ng-controller=\"dateCtrl\">\n" +
     "                <dateselect model=\"current\"></dateselect><br/>\n" +
     "                <dateselect model=\"current\"></dateselect><br/>\n" +
-    "                {{current | date:'yyyy-MM-dd'}}\n" +
+    "                {{current | date:'yyyy-MM-dd'}} \n" +
     "            </div>\n" +
     "            <div ng-controller=\"dynCtrl\">\n" +
     "                <dynamic-select model=\"personId\" resource=\"People.getList\" resource-id=\"id\" resource-label=\"name\" />\n" +
-    "            </div>\n" +
-    " -->            </md-tab>\n" +
-    "            <md-tab label=\"tab3\">\n" +
-    "                <digital-clock/>\n" +
+    "            </div> \n" +
+    " -->\n" +
     "            </md-tab>\n" +
-    "            <md-tab label=\"tab4\">\n" +
-    "                <style> \n" +
-    "                    .error { border:1px solid blud; padding: 10px 15px; margin: 0 0 10px; border : 1px solid blue;  }\n" +
-    "                    .error--warning { border : 1px solid red; }\n" +
-    "                    .error--invalid { border: 1px solid green }\n" +
+    "            <md-tab label=\"Digital Clock\">\n" +
+    "                <digital-clock/> \n" +
+    "            </md-tab>\n" +
+    "            <md-tab label=\"tab4\"> \n" +
+    "                <style>\n" +
+    "                .error {\n" +
+    "                    border: 1px solid blud;\n" +
+    "                    padding: 10px 15px;\n" +
+    "                    margin: 0 0 10px;\n" +
+    "                    border: 1px solid blue;\n" +
+    "                }\n" +
+    "                 \n" +
+    "                .error--warning {\n" +
+    "                    border: 1px solid red;\n" +
+    "                }\n" +
+    "                .error--invalid {\n" +
+    "                    border: 1px solid green\n" +
+    "                }\n" +
     "                </style>\n" +
     "                <div ng-controller=\"ErrorController as errors\">\n" +
     "                    <div ng-repeat=\"error in errors.list\" error-message type=\"{{error.type}}\"> {{ error.message }}</div>\n" +
     "                </div>\n" +
+    "            </md-tab>\n" +
+    "            <md-tab label=\"Tic Tac Toe\" > \n" +
+    "                <div ng-controller=\"tictacCont\"> \n" +
+    "                <tictactoe></tictactoe>\n" +
+    "                </div> \n" +
+    "            </md-tab>\n" +
+    "            <md-tab label=\"Augusteeen\">\n" +
+    "                <ag-filter></ag-filter>\n" +
     "            </md-tab>\n" +
     "        </md-tabs>\n" +
     "        <div id=\"content\" ui-view flex> </div>\n" +
@@ -675,6 +831,17 @@ angular.module("../app/index.html", []).run(["$templateCache", function($templat
     "  <link rel=\"stylesheet\" href=\"../bower_components/angular-material/angular-material.css\">\n" +
     "  <link rel=\"stylesheet\" href=\"app.css\">\n" +
     "  <script src=\"../bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js\"></script>\n" +
+    "\n" +
+    "  <!-- Latest compiled and minified CSS -->\n" +
+    "<link rel=\"stylesheet\" href=\"../bower_components/bootstrap/dist/css/bootstrap.min.css\" >\n" +
+    "\n" +
+    "<!-- Optional theme -->\n" +
+    "<link rel=\"stylesheet\" href=\"../bower_components/bootstrap/dist/css/bootstrap-theme.min.css\" >\n" +
+    "<script src=\"../bower_components/jquery/dist/jquery.min.js\"></script>\n" +
+    "<!-- Latest compiled and minified JavaScript -->\n" +
+    "<script src=\"../bower_components/bootstrap/dist/js/bootstrap.min.js\"></script>\n" +
+    "\n" +
+    "\n" +
     "</head>\n" +
     "<body>\n" +
     "  <!--<ul class=\"menu\">\n" +

@@ -53,6 +53,17 @@ module.exports = function(grunt) {
                 }
             }
         },
+        sass: {
+            options: {
+                sourceMap: true,
+                outputStyle: 'compressed'
+            },
+            dist: {
+                files: {
+                    'dist/styles.css': 'app/sass/styles.scss'
+                }
+            }
+        },
         clean: {
             temp: {
                 src: ['tmp']
@@ -64,6 +75,16 @@ module.exports = function(grunt) {
                 tasks: ['html2js:dist', 'concat:dist', 'clean:temp'], //'karma:unit','jshint',
                 options: {
                     spawn: false,
+                    // livereload: true
+                }
+            },
+            sass: {
+                files: ['app/sass/**/*.{scss,sass}','sass/_partials/**/*.{scss,sass}'],
+                tasks: ['sass:dist']
+            },
+            livereload: {
+                files: [ 'Gruntfile.js', 'app/**/*.js','app/**/**/*.js', 'app/**/*.html','*.js'],
+                options: {
                     livereload: true
                 }
             },
@@ -129,6 +150,9 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-karma');
     grunt.loadNpmTasks('grunt-newer');
+    grunt.loadNpmTasks('grunt-sass');
+
+    grunt.registerTask('dev', ['bower', 'connect:server', 'newer:watch:dev','watch:livereload']);
     grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('dgeni', 'Generate docs via dgeni.', function() {

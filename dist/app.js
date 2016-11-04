@@ -268,7 +268,31 @@ angular.module('cookbook')
 				});
 			}
 		};
-	}]);;/**
+	}]);;function lengthCheck() {
+  return {
+    restrict: 'A',
+    require: 'ngModel',
+    compile: function ($element) {
+      // $element.addClass('dynamic-input');
+      return function ($scope, $element, $attrs, $ctrl) {
+        var dynamicClass = 'dynamic-input--no-contents';
+        $scope.$watch(function () {
+          return $ctrl.$viewValue;
+        }, function (newValue) {
+          if (newValue) {
+            $element.removeClass(dynamicClass);
+          } else {
+            $element.addClass(dynamicClass);
+          }
+        });
+      };
+    }
+  };
+}
+
+angular
+  .module('cookbook')
+  .directive('lengthCheck', lengthCheck);;/**
  * cookbook Module
  *
  * Description
@@ -286,6 +310,9 @@ angular.module('cookbook')
                     name: 'Alpha',
                     progress: 20
                 }, {
+                    name: 'Zika',
+                    progress: 100
+                },{
                     name: 'Omega',
                     progress: 40
                 }, {
@@ -611,13 +638,22 @@ angular.module("../app/components/cookbook/tablefilter.html", []).run(["$templat
   $templateCache.put("../app/components/cookbook/tablefilter.html",
     "<div class=\"panel panel-default\">\n" +
     "    <div class=\"panel-heading\">\n" +
-    "        <h2 class=\"panel-title\">Project List</h2>\n" +
-    "        <small>Keep track of project </small>\n" +
+    "        <div class=\"row\">\n" +
+    "            <div class=\"col-xs-6\">\n" +
+    "                <h2 class=\"panel-title\">Project List</h2>\n" +
+    "                <small>Keep track of project </small>\n" +
+    "            </div>\n" +
+    "            <div class=\"col-xs-6\">\n" +
+    "                <form>\n" +
+    "                    <input class=\"dynamic-input\" length-check ng-model=\"query\" type=\"text\">\n" +
+    "                </form>\n" +
+    "            </div>\n" +
+    "        </div>\n" +
     "    </div>\n" +
     "    <div class=\"panel-body\">\n" +
     "        <ul class=\"list-group\">\n" +
-    "            <li class=\"list-group-item\" ng-repeat=\"item in list\">\n" +
-    "                <div class=\"row\" >\n" +
+    "            <li class=\"list-group-item\" ng-repeat=\"item in list | filter: query | orderBy: name\">\n" +
+    "                <div class=\"row\">\n" +
     "                    <div class=\"col-xs-6\">\n" +
     "                        <a href=\"#\">\n" +
     "                            <div class=\"margin-right-5 letter-icon-wrapper size-sm\" style=\"background-color: rgb(127, 140, 141);\">\n" +
@@ -727,7 +763,7 @@ angular.module("../app/components/ux/login.html", []).run(["$templateCache", fun
 
 angular.module("../app/components/ux/main.html", []).run(["$templateCache", function($templateCache) {
   $templateCache.put("../app/components/ux/main.html",
-    "<div ui-view>\n" +
+    "<div ui-view flex layout-fill>\n" +
     "    <div ng-controller=\"tabCtrl\" layout=\"column\" class=\"demo\">\n" +
     "        <!--  <script type=\"text/ng-template\" id=\"partials/view1.html\"> Tab #1 </script>\n" +
     "        <script type=\"text/ng-template\" id=\"partials/view2.html\"> Tab #2 </script>\n" +

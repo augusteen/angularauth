@@ -1,12 +1,21 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h2 class="panel-title">Project List</h2>
-        <small>Keep track of project </small>
+        <div class="row">
+            <div class="col-xs-6">
+                <h2 class="panel-title">Project List</h2>
+                <small>Keep track of project </small>
+            </div>
+            <div class="col-xs-6">
+                <form>
+                    <input class="dynamic-input" length-check ng-model="query" type="text">
+                </form>
+            </div>
+        </div>
     </div>
     <div class="panel-body">
         <ul class="list-group">
-            <li class="list-group-item" ng-repeat="item in list">
-                <div class="row" >
+            <li class="list-group-item" ng-repeat="item in list | filter: query | orderBy: name">
+                <div class="row">
                     <div class="col-xs-6">
                         <a href="#">
                             <div class="margin-right-5 letter-icon-wrapper size-sm" style="background-color: rgb(127, 140, 141);">

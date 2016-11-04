@@ -16,6 +16,9 @@ angular.module('cookbook')
                     name: 'Alpha',
                     progress: 20
                 }, {
+                    name: 'Zika',
+                    progress: 100
+                },{
                     name: 'Omega',
                     progress: 40
                 }, {

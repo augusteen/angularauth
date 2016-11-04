@@ -135,7 +135,7 @@ module.exports = function(grunt) {
         },
         degeni:{
 
-        }
+        } 
 
     });
 
@@ -152,7 +152,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-newer');
     grunt.loadNpmTasks('grunt-sass');
 
-    grunt.registerTask('dev', ['bower', 'connect:server', 'newer:watch:dev','watch:livereload']);
+    // grunt.registerTask('dev', ['bower', 'sass','connect:server', 'newer:watch:dev','watch:livereload']);
     grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('dgeni', 'Generate docs via dgeni.', function() {
@@ -162,7 +162,7 @@ module.exports = function(grunt) {
 
         dgeni.generate().then(done);
     });
-    grunt.registerTask('dev', ['bower', 'connect:server', 'newer:watch:dev']);
+    grunt.registerTask('dev', ['bower','sass', 'connect:server', 'newer:watch:dev','newer:watch:css']);
     grunt.registerTask('test', ['bower', 'jshint', 'karma:continuous']);
     grunt.registerTask('minified', ['bower', 'connect:server', 'watch:min']);
     grunt.registerTask('package', ['bower', 'jshint', 'karma:unit', 'html2js:dist', 'concat:dist', 'uglify:dist',

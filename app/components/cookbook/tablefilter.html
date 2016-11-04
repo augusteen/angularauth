@@ -5,16 +5,19 @@
     </div>
     <div class="panel-body">
         <ul class="list-group">
-            <li class="list-group-item">
+            <li class="list-group-item" ng-repeat="item in list">
                 <div class="row" >
                     <div class="col-xs-6">
                         <a href="#">
-                            <div></div>
+                            <div class="margin-right-5 letter-icon-wrapper size-sm" style="background-color: rgb(127, 140, 141);">
+                                <span class="letter-icon">{{setChar(item.name)}}  </span>
+                            </div>
+                            {{item.name}}
                         </a>
                     </div>
                     <div class="col-xs-6">
                         <div class="progress">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" ng-style="{{setProgress(item.progress)}}">
                                 <span class="sr-only">40% Complete (success)</span>
                             </div>
                         </div>

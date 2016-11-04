@@ -11,6 +11,7 @@ angular.module('cookbook', []);
  * @requires ngMaterial
  * @requires ngAnimates
  */
+
 angular.module('myApp', [
     'ngMaterial', 'ngAnimate', 'ui.router',
     'components','cookbook' 

@@ -2,7 +2,7 @@
 /**
  * @module cookbook
  */
-angular.module('cookbook', []);
+angular.module('cookbook', ['d3']);
 // Declare app level module which depends on views, and components
 
 /**

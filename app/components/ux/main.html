@@ -33,9 +33,9 @@
  -->
             </md-tab>
             <md-tab label="Digital Clock">
-                <digital-clock/> 
+                <digital-clock/>
             </md-tab>
-            <md-tab label="tab4"> 
+            <md-tab label="tab4">
                 <style>
                 .error {
                     border: 1px solid blud;
@@ -43,10 +43,11 @@
                     margin: 0 0 10px;
                     border: 1px solid blue;
                 }
-                 
+                
                 .error--warning {
                     border: 1px solid red;
                 }
+                
                 .error--invalid {
                     border: 1px solid green
                 }
@@ -55,17 +56,32 @@
                     <div ng-repeat="error in errors.list" error-message type="{{error.type}}"> {{ error.message }}</div>
                 </div>
             </md-tab>
-            <md-tab label="Tic Tac Toe" > 
-                <div ng-controller="tictacCont"> 
-                <tictactoe hello="hello" board="board" play="play(num)" >
-                  
-                </tictactoe>
-                    <div ng-bind="hello"></div> 
-                </div> 
+            <md-tab label="Tic Tac Toe">
+                <div ng-controller="tictacCont">
+                    <tictactoe hello="hello" board="board" play="play(num)">
+                    </tictactoe>
+                    <div ng-bind="hello"></div>
+                </div>
             </md-tab>
             <md-tab label="Augusteeen">
                 <ag-filter></ag-filter>
-            </md-tab>
+            </md-tab> 
+            <md-tab label="D3"> 
+                <div class="col-md-6 col-md-offset-3" ng-controller="D3Ctrl">
+                    <span>{{title}}</span>
+                    <d3-bars data="d3Data" label="name" on-click="d3OnClick(item)"></d3-bars>
+                    <br> 
+                    <br>
+                    <span>First Item</span>
+                    <input type="text" ng-model="d3Data[0].score"></input>
+                    <br>
+                    <span>Second Item</span>
+                    <input type="text" ng-model="d3Data[1].score"></input>
+                    <br>
+                    <span>Third Item</span>
+                    <input type="text" ng-model="d3Data[2].score"></input>
+                </div>
+            </md-tab> 
         </md-tabs>
         <div id="content" ui-view flex> </div>
     </div>

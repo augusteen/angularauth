@@ -2,7 +2,7 @@
 /**
  * @module cookbook
  */
-angular.module('cookbook', []);
+angular.module('cookbook', ['d3']);
 // Declare app level module which depends on views, and components
 
 /**
@@ -166,6 +166,117 @@ angular.module('cookbook')
     }])
     .controller('dynCtrl', ['$scope', function($scope){
     	$scope.personId = 2;
+    }])
+;angular.module('cookbook')
+    .directive('d3Bars', ['d3Service', function(d3Service) {
+        // Runs during compile
+        return {
+            // name: '',
+            // priority: 1,
+            // terminal: true,
+            scope: {
+                data: "=",
+                label: "@",
+                onClick: "&"
+            }, // {} = isolate, true = child, false/undefined = no change
+            // controller: function($scope, $element, $attrs, $transclude) {},
+            // require: 'ngModel', // Array = multiple requires, ? = optional, ^ = check parent elements
+            // restrict: 'A', // E = Element, A = Attribute, C = Class, M = Comment
+            // template: '',
+            // templateUrl: '',
+            // replace: true,
+            // transclude: true,
+            // compile: function(tElement, tAttrs, function transclude(function(scope, cloneLinkingFn){ return function linking(scope, elm, attrs){}})),
+            link: function($scope, iElm, iAttrs, controller) {
+                d3Service.d3().then(function(d3) {
+                    var margin = parseInt(iAttrs.margin) || 20,
+                        barHeight = parseInt(iAttrs.barHeight) || 20,
+                        barPadding = parseInt(iAttrs.barPadding) || 5;
+
+
+                    var svg = d3.select(iElm[0])
+                        .append('svg')
+                        .style('width', '100%');
+
+                    window.onresize = function() {
+                        $scope.apply();
+                    }
+
+                    // $scope.data = [
+                    //     { name: 'Greg', score: 99 },
+                    //     { name: 'Ari', score: 98 },
+                    //     { name: 'Q', score: 96 },
+                    //     { name: 'Loser', score: 44 }
+                    // ];
+                    $scope.$watch(function() {
+                        return angular.element(window)[0].innerWidth;
+                    }, function() {
+                        $scope.render($scope.data);
+                    });
+
+                    $scope.render = function(data) {
+                        svg.selectAll('*').remove();
+
+                        // If we don't pass any data, return out of the element
+                        // if (!data) return;
+
+                        // setup variables
+                        var width, height, max;
+                        width = d3.select(iElm[0])._groups[0][0].offsetWidth - 20;
+                        // 20 is for margins and can be changed
+                        height = $scope.data.length * 35;
+                        // 35 = 30(bar height) + 5(margin between bars)
+                        max = 98;
+
+                        // set the height based on the calculations above
+                        svg.attr('height', height);
+
+                        //create the rectangles for the bar chart
+                        svg.selectAll('rect')
+                            .data(data)
+                            .enter()
+                            .append("rect")
+                            .on("click", function(d, i) {
+                                return $scope.onClick({ item: d }); })
+                            .attr("height", 30) // height of each bar
+                            .attr("width", 0) // initial width of 0 for transition
+                            .attr("x", 10) // half of the 20 side margin specified above
+                            .attr("y", function(d, i) {
+                                return i * 35;
+                            }) // height + margin between bars
+                            .attr('fill','yellow')
+                            .transition()
+                            .duration(1000) // time of duration
+                            .attr("width", function(d) {
+                                return d.score / (max / width);
+                            }); // width based on scale
+
+                        svg.selectAll("text")
+                            .data(data)
+                            .enter()
+                            .append("text")
+                            .attr("fill", "#fff")
+                            .attr("y", function(d, i) {
+                                return i * 35 + 22;
+                            })
+                            .attr("x", 15)
+                            .text(function(d) {
+                                return d[$scope.label];
+                            });
+                    }
+                });
+            }
+        };
+    }]).controller('D3Ctrl', ['$scope', function($scope){
+      $scope.title = "D3Ctrl";
+      $scope.d3Data = [
+        {name: "Greg", score:98},
+        {name: "Ari", score:96},
+        {name: "Loser", score: 48}
+      ];
+      $scope.d3OnClick = function(item){
+        alert(item.name);
+      };
     }])
 ;/**
  * coookbook Module
@@ -431,6 +542,33 @@ app.factory('synthesize', [
 ]);
 
  */
+;angular.module('d3', [])
+    .factory('d3Service', ['$document', '$q', '$rootScope', function($document,$q,$rootScope) {
+
+        var d = $q.defer();
+
+        function onScriptLoad() {
+            $rootScope.$apply(function() { d.resolve(window.d3); })
+        }
+
+        var scriptTag = $document[0].createElement('script');
+        scriptTag.type = 'text/javascript';
+        scriptTag.async = true;
+        scriptTag.src = '../bower_components/d3/d3.js';
+        scriptTag.onreadystatechange = function() {
+            if (this.readyState == 'complete') onScriptLoad();
+        }
+        scriptTag.onload = onScriptLoad;
+
+        var s = $document[0].getElementsByTagName('body')[0];
+        s.appendChild(scriptTag);
+
+        return {
+            d3: function() {
+                return d.promise; }
+        };
+
+    }]);
 ;var loginForm = {
 	bindings: {
 	 user: '<',
@@ -798,9 +936,9 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     " -->\n" +
     "            </md-tab>\n" +
     "            <md-tab label=\"Digital Clock\">\n" +
-    "                <digital-clock/> \n" +
+    "                <digital-clock/>\n" +
     "            </md-tab>\n" +
-    "            <md-tab label=\"tab4\"> \n" +
+    "            <md-tab label=\"tab4\">\n" +
     "                <style>\n" +
     "                .error {\n" +
     "                    border: 1px solid blud;\n" +
@@ -808,10 +946,11 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "                    margin: 0 0 10px;\n" +
     "                    border: 1px solid blue;\n" +
     "                }\n" +
-    "                 \n" +
+    "                \n" +
     "                .error--warning {\n" +
     "                    border: 1px solid red;\n" +
     "                }\n" +
+    "                \n" +
     "                .error--invalid {\n" +
     "                    border: 1px solid green\n" +
     "                }\n" +
@@ -820,17 +959,32 @@ angular.module("../app/components/ux/main.html", []).run(["$templateCache", func
     "                    <div ng-repeat=\"error in errors.list\" error-message type=\"{{error.type}}\"> {{ error.message }}</div>\n" +
     "                </div>\n" +
     "            </md-tab>\n" +
-    "            <md-tab label=\"Tic Tac Toe\" > \n" +
-    "                <div ng-controller=\"tictacCont\"> \n" +
-    "                <tictactoe hello=\"hello\" board=\"board\" play=\"play(num)\" >\n" +
-    "                  \n" +
-    "                </tictactoe>\n" +
-    "                    <div ng-bind=\"hello\"></div> \n" +
-    "                </div> \n" +
+    "            <md-tab label=\"Tic Tac Toe\">\n" +
+    "                <div ng-controller=\"tictacCont\">\n" +
+    "                    <tictactoe hello=\"hello\" board=\"board\" play=\"play(num)\">\n" +
+    "                    </tictactoe>\n" +
+    "                    <div ng-bind=\"hello\"></div>\n" +
+    "                </div>\n" +
     "            </md-tab>\n" +
     "            <md-tab label=\"Augusteeen\">\n" +
     "                <ag-filter></ag-filter>\n" +
-    "            </md-tab>\n" +
+    "            </md-tab> \n" +
+    "            <md-tab label=\"D3\"> \n" +
+    "                <div class=\"col-md-6 col-md-offset-3\" ng-controller=\"D3Ctrl\">\n" +
+    "                    <span>{{title}}</span>\n" +
+    "                    <d3-bars data=\"d3Data\" label=\"name\" on-click=\"d3OnClick(item)\"></d3-bars>\n" +
+    "                    <br> \n" +
+    "                    <br>\n" +
+    "                    <span>First Item</span>\n" +
+    "                    <input type=\"text\" ng-model=\"d3Data[0].score\"></input>\n" +
+    "                    <br>\n" +
+    "                    <span>Second Item</span>\n" +
+    "                    <input type=\"text\" ng-model=\"d3Data[1].score\"></input>\n" +
+    "                    <br>\n" +
+    "                    <span>Third Item</span>\n" +
+    "                    <input type=\"text\" ng-model=\"d3Data[2].score\"></input>\n" +
+    "                </div>\n" +
+    "            </md-tab> \n" +
     "        </md-tabs>\n" +
     "        <div id=\"content\" ui-view flex> </div>\n" +
     "    </div>\n" +
